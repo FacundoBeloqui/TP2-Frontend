@@ -5,8 +5,5 @@
 
 <div class="app">
 	<Header />
-    <main>
-        
-    </main>
 	<Footer />
 </div>
