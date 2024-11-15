@@ -72,8 +72,8 @@
 			</a>
 		</p>
 		<p class="main-menu-item">
-			<!-- svelte-ignore a11y_missing_attribute -->
-			<a class="main-menu-heading">
+		<!-- svelte-ignore a11y_missing_attribute -->
+			<a href="/Pokemones" class="main-menu-heading">
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
 					viewBox="0 0 512 512"
@@ -90,8 +90,8 @@
 			</a>
 		</p>
 		<p class="main-menu-item">
-			<!-- svelte-ignore a11y_missing_attribute -->
-			<a class="main-menu-heading">
+		<!-- svelte-ignore a11y_missing_attribute -->
+			<a href="/Movimientos" class="main-menu-heading">
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
 					viewBox="0 0 512 512"
@@ -110,7 +110,7 @@
 		</p>
 		<p class="main-menu-item">
 			<!-- svelte-ignore a11y_missing_attribute -->
-			<a class="main-menu-heading">
+			 <a href="/Equipos" class="main-menu-heading">
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
 					viewBox="0 0 512 512"
