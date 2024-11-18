@@ -1,1 +1,1 @@
-<h1>esta es la pagina de equpos</h1>
+<h1>esta es la pagina de equipos</h1>
