@@ -1,1 +1,0 @@
-<h1>esta es la pagina de equpos</h1>
