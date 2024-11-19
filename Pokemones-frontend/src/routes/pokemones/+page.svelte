@@ -23,7 +23,7 @@
 	</thead>
 	<tbody>
 		{#each data.pokemones as pokemon}
-			{#if pokemon.id < 10195}
+			{#if pokemon.identificador != 'string'}
 				<tr class={pokemon.id % 2 == 0 ? 'zero' : 'one'}>
 					<td>{pokemon.id}</td>
 					<td>{pokemon.identificador}</td>
@@ -49,25 +49,58 @@
 	</tbody>
 </table>
 
-<!--
-<h2>Dar de alta alumno</h2>
+<h2>Crear Pokemon</h2>
 <form method="POST" action="?/create">
 	<label>
 		Nombre:
-		<input name="nombre" autocomplete="off" />
+		<input name="identificador" autocomplete="off" />
 	</label>
 	<label>
-		Apellido:
-		<input name="apellido" autocomplete="off" />
+		Altura:
+		<input name="altura" autocomplete="off" />
 	</label>
 	<label>
-		Edad:
-		<input name="edad" autocomplete="off" />
+		Peso:
+		<input name="peso" autocomplete="off" />
 	</label>
+	<!-- 
+	<label>
+		Experiencia Base:
+		<input name="experiencia_base" autocomplete="off" />
+	</label>
+	<label>
+		Imagen:
+		<input name="imagen" autocomplete="off" />
+	</label>
+	<label>
+		Grupo De Huevo:
+		<input name="grupo_de_huevo" autocomplete="off" />
+	</label>
+	<label>
+		Generacion:
+		<input name="generacion" autocomplete="off" />
+	</label>
+	<label>
+		Habilidades:
+		<input name="Habilidades" autocomplete="off" />
+	</label>
+	<label>
+		Evoluciones Inmediatas:
+		<input name="evoluciones_inmediatas" autocomplete="off" />
+	</label>
+	<label>
+		Tipo:
+		<input name="tipo" autocomplete="off" />
+	</label>
+	<label>
+		Estadisticas:
+		<input name="estadisticas" autocomplete="off" />
+	</label>
+	 -->
 
 	<button>Crear</button>
 </form>
--->
+
 <style>
 	tr {
 		text-align: center;
