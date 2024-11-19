@@ -23,20 +23,28 @@
 	</thead>
 	<tbody>
 		{#each data.pokemones as pokemon}
-			<tr class={pokemon.id % 2 == 0 ? 'zero' : 'one'}>
-				<td>{pokemon.id}</td>
-				<td>{pokemon.identificador}</td>
-				<td>{pokemon.altura}</td>
-				<td>{pokemon.peso}</td>
-				<td>{pokemon.experiencia_base}</td>
-				<td><img src={pokemon.imagen} alt="imagen de {pokemon.identificador}" /></td>
-				<td>{pokemon.grupo_de_huevo}</td>
-				<td>{pokemon.generacion}</td>
-				<td>{pokemon.habilidades}</td>
-				<td>{pokemon.evoluciones_inmediatas}</td>
-				<td>{pokemon.tipo}</td>
-				<td>{Object.keys(pokemon.estadisticas).map((key) => [key, pokemon.estadisticas[key]])}</td>
-			</tr>
+			{#if pokemon.id < 10195}
+				<tr class={pokemon.id % 2 == 0 ? 'zero' : 'one'}>
+					<td>{pokemon.id}</td>
+					<td>{pokemon.identificador}</td>
+					<td>{pokemon.altura}</td>
+					<td>{pokemon.peso}</td>
+					<td>{pokemon.experiencia_base}</td>
+					<td><img src={pokemon.imagen} alt="imagen de {pokemon.identificador}" /></td>
+					<td>{pokemon.grupo_de_huevo}</td>
+					<td>{pokemon.generacion}</td>
+					<td>{pokemon.habilidades}</td>
+					<td>{pokemon.evoluciones_inmediatas}</td>
+					<td>{pokemon.tipo}</td>
+					<td
+						><ul>
+							{#each Object.entries(pokemon.estadisticas) as [key, value]}
+								<li>{key}: {value}</li>
+							{/each}
+						</ul></td
+					>
+				</tr>
+			{/if}
 		{/each}
 	</tbody>
 </table>
