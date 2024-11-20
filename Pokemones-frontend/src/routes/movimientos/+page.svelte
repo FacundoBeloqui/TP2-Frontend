@@ -16,16 +16,13 @@
             <th>pp</th>
             <th>categoria</th>
             <th>efecto</th>
-            <th> pokemones_subida_nivel</th>
-            <th>pokemones_tm</th>
-            <th> pokemones_grupo_huevo</th>
         </tr>
     </thead>
     <tbody>
-        {#each data.movimiento as movimiento}
+        {#each data.movimientos as movimiento}
             <tr class="{movimiento.id % 2 == 0 ? 'zero' : 'one'}">
                 <td>{movimiento.id}</td>
-                <td>{movimiento.nombre}</td>
+                <td><a href="/movimientos/{movimiento.id}">{movimiento.nombre}</a></td>
                 <td>{movimiento.generacion}</td>
                 <td>{movimiento.tipo}</td>
                 <td>{movimiento.poder}</td>
@@ -33,13 +30,29 @@
                 <td>{movimiento.pp}</td>
                 <td>{movimiento.categoria}</td>
                 <td>{movimiento.efecto}</td>
-                <td>{movimiento.pokemones_subida_nivel}</td>
-                <td>{movimiento.pokemones_tm}</td>
-                <td>{movimiento.pokemones_grupo_huevo}</td>
                 
             </tr>
         {/each}
     </tbody>
 </table>
 
-<h1>esta es la pagina de movimientos</h1>
+<style>
+	a {
+		color: inherit;
+		text-decoration: none;
+	}
+
+	table {
+		width: 100%;
+	}
+	tr {
+		text-align: center;
+	}
+	.zero {
+		background-color: rgb(172, 169, 169);
+	}
+	.one {
+		background-color: white;
+	}
+</style>
+

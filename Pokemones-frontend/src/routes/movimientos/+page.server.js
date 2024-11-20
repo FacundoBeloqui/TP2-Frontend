@@ -5,9 +5,9 @@ export async function load() {
         throw new Error(`Response status: ${response.status}`);
     }
 
-    let pokemones = await response.json();
+    let movimientos = await response.json();
 
     return {
-        pokemones: pokemones
+        movimientos: movimientos
     };
 }
