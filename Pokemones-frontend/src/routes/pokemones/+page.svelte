@@ -13,12 +13,6 @@
 			<th>Peso</th>
 			<th>Experiencia Base</th>
 			<th>Imagen</th>
-			<th>Grupo de Huevo</th>
-			<th>Generacion</th>
-			<th>Habilidades</th>
-			<th>Evoluciones Inmediatas</th>
-			<th>Tipo</th>
-			<th>Estadisticas</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -26,23 +20,11 @@
 			{#if pokemon.identificador != 'string'}
 				<tr class={pokemon.id % 2 == 0 ? 'zero' : 'one'}>
 					<td>{pokemon.id}</td>
-					<td>{pokemon.identificador}</td>
+					<td><a href="/pokemones/{pokemon.id}">{pokemon.identificador}</a></td>
 					<td>{pokemon.altura}</td>
 					<td>{pokemon.peso}</td>
 					<td>{pokemon.experiencia_base}</td>
 					<td><img src={pokemon.imagen} alt="imagen de {pokemon.identificador}" /></td>
-					<td>{pokemon.grupo_de_huevo}</td>
-					<td>{pokemon.generacion}</td>
-					<td>{pokemon.habilidades}</td>
-					<td>{pokemon.evoluciones_inmediatas}</td>
-					<td>{pokemon.tipo}</td>
-					<td
-						><ul>
-							{#each Object.entries(pokemon.estadisticas) as [key, value]}
-								<li>{key}: {value}</li>
-							{/each}
-						</ul></td
-					>
 				</tr>
 			{/if}
 		{/each}
@@ -63,7 +45,6 @@
 		Peso:
 		<input name="peso" autocomplete="off" />
 	</label>
-	<!-- 
 	<label>
 		Experiencia Base:
 		<input name="experiencia_base" autocomplete="off" />
@@ -82,7 +63,7 @@
 	</label>
 	<label>
 		Habilidades:
-		<input name="Habilidades" autocomplete="off" />
+		<input name="habilidades" autocomplete="off" />
 	</label>
 	<label>
 		Evoluciones Inmediatas:
@@ -96,12 +77,22 @@
 		Estadisticas:
 		<input name="estadisticas" autocomplete="off" />
 	</label>
-	 -->
-
+	<label>
+		Id de especie:
+		<input name="id_especie" autocomplete="off" />
+	</label>
 	<button>Crear</button>
 </form>
 
 <style>
+	a {
+		color: inherit;
+		text-decoration: none;
+	}
+
+	table {
+		width: 100%;
+	}
 	tr {
 		text-align: center;
 	}
