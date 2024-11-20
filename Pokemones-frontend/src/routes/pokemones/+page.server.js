@@ -13,25 +13,25 @@ export async function load() {
 }
 
 export const actions = {
-	create: async ({ request }) => {
+	create: async ({ cookies, request }) => {
 		const data = await request.formData();
-
 		let url = new URL('http://localhost:8000/pokemones/');
 		const response = await fetch(url, {
 			method: 'POST',
 			headers: { 'Content-Type': 'application/json' },
 			body: JSON.stringify({
 				identificador: data.get('identificador'),
-				altura: data.get('altura'),
-				peso: data.get('peso')
-				/*experiencia_base: data.get('experiencia_base'),
+				altura: parseInt(data.get('altura')),
+				peso: parseInt(data.get('peso')),
+				experiencia_base: parseInt(data.get('experiencia_base'), 10),
 				imagen: data.get('imagen'),
 				grupo_de_huevo: data.get('grupo_de_huevo'),
-				generacion: data.get('generacion'),
-				habilidades: data.get('habilidades'),
-				evoluciones_inmediatas: data.get('evoluciones_inmediatas'),
-				tipo: data.get('tipo'),
-				estadisticas: data.get('estadisticas')*/
+				generacion: data.get('generacion')?.split(','),
+				habilidades: data.get('habilidades')?.split(','),
+				evoluciones_inmediatas: data.get('evoluciones_inmediatas')?.split(','),
+				tipo: data.get('tipo')?.split(','),
+				estadisticas: JSON.parse(data.get('estadisticas')),
+				id_especie: parseInt(data.get('id_especie'))
 			})
 		});
 		if (!response.ok) {
