@@ -12,3 +12,18 @@
 	</main>
 	<Footer />
 </div>
+
+
+<style>
+	.app {
+		min-height: 100dvh;
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+	}
+
+	main {
+		flex: 1;
+		margin: 0 auto;
+	}
+</style>
