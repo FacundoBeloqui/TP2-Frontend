@@ -15,19 +15,53 @@
 		<p><strong>Categoría:</strong> {data.movimiento.categoria}</p>
 		<p><strong>Efecto:</strong> {data.movimiento.efecto || 'Sin efecto'}</p>
 	</div>
+
+	<div>
+		<h3>pokemon que pueden aprender este movimiento</h3>
+
+		{#if data.pokemones_subida_nivel.length > 0}
+			<h4>Por Subida de Nivel</h4>
+			<ul>
+				{#each data.pokemones_subida_nivel as pokemon}
+					<li>{pokemon}</li>
+				{/each}
+			</ul>
+		{:else}
+			<p>No hay pokemon que aprendan este movimiento por subida de nivel.</p>
+		{/if}
+
+		{#if data.pokemones_tm.length > 0}
+			<h4>Por TM</h4>
+			<ul>
+				{#each data.pokemones_tm as pokemon}
+					<li>{pokemon}</li>
+				{/each}
+			</ul>
+		{:else}
+			<p>No hay pokemon que aprendan este movimiento por TM.</p>
+		{/if}
+		{#if data.pokemones_grupo_huevo.length > 0}
+			<h4>Por Grupo de Huevo</h4>
+			<ul>
+				{#each data.pokemones_grupo_huevo as pokemon}
+					<li>{pokemon}</li>
+				{/each}
+			</ul>
+		{:else}
+			<p>No hay pokemon que aprendan este movimiento por Grupo de Huevo.</p>
+		{/if}
+	</div>
 {:else}
-	<p>No se encontró el movimiento.</p>
+	<p>No se encontro el movimiento.</p>
 {/if}
 
-<a href="/movimientos">Volver a la lista</a>
+<button class="volver-link"><a href="/movimientos">Volver a la lista</a></button>
 
-<style>	
-	a {
-		color: inherit;
-		text-decoration: none;
-	}
-
-	h1, h2 {
+<style>
+	h1,
+	h2,
+	h3,
+	h4 {
 		text-align: center;
 	}
 
@@ -43,5 +77,44 @@
 	p {
 		font-size: 1.2em;
 		margin: 5px 0;
+	}
+
+	ul {
+		list-style-type: disc;
+		padding-left: 40px;
+		margin: 10px 0;
+	}
+
+	li {
+		font-size: 1.1em;
+		margin-bottom: 5px;
+	}
+	button {
+		background-color: #04aa6d;
+		border: none;
+		color: white;
+		padding: 16px 32px;
+		text-align: center;
+		text-decoration: none;
+		display: inline-block;
+		font-size: 16px;
+		margin: 4px 2px;
+		transition-duration: 0.4s;
+		cursor: pointer;
+		border-radius: 12px;
+	}
+
+	.volver-link {
+		background-color: white;
+		color: black;
+		border: 2px solid #04aa6d;
+	}
+
+	.volver-link:hover {
+		background-color: #04aa6d;
+		color: white;
+	}
+	a {
+		color: inherit;
 	}
 </style>
