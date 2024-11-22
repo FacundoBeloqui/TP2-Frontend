@@ -3,43 +3,45 @@
 </script>
 
 {#if data.movimiento}
-	<main>
-		<h1>{data.movimiento.nombre}</h1>
-		<p class="presentacion">
-			El movimiento <strong>{data.movimiento.nombre}</strong> pertenece al tipo 
-			<strong>{data.movimiento.tipo}</strong>.
-		</p>
-		<section class="movimiento-data">
-			<h2>Detalles del Movimiento</h2>
-			<table>
-				<tbody>
-					<tr>
-						<th>Poder</th>
-						<td>{data.movimiento.poder || '-'}</td>
-					</tr>
-					<tr>
-						<th>Precisión</th>
-						<td>{data.movimiento.accuracy || '-'}</td>
-					</tr>
-					<tr>
-						<th>PP</th>
-						<td>{data.movimiento.pp}</td>
-					</tr>
-					<tr>
-						<th>Categoría</th>
-						<td>{data.movimiento.categoria}</td>
-					</tr>
-					<tr>
-						<th>Efecto</th>
-						<td>{data.movimiento.efecto || 'Sin efecto'}</td>
-					</tr>
-				</tbody>
-			</table>
-		</section>
-	</main>
-{:else}
-	<p class="no-encontrado">No se encontró el movimiento.</p>
-{/if}
+	<div>
+		<h2>{data.movimiento.nombre}</h2>
+		<p><strong>Generación:</strong> {data.movimiento.generacion}</p>
+		<p><strong>Tipo:</strong> {data.movimiento.tipo}</p>
+		<p><strong>Poder:</strong> {data.movimiento.poder || '-'}</p>
+		<p><strong>Precisión:</strong> {data.movimiento.accuracy || '-'}</p>
+		<p><strong>PP:</strong> {data.movimiento.pp}</p>
+		<p><strong>Categoría:</strong> {data.movimiento.categoria}</p>
+		<p><strong>Efecto:</strong> {data.movimiento.efecto || 'Sin efecto'}</p>
+	</div>
+
+	<div>
+		<h3>pokemon que pueden aprender este movimiento</h3>
+
+		{#if data.pokemones_subida_nivel.length > 0}
+			<h4>Por Subida de Nivel</h4>
+			<ul>
+				{#each data.pokemones_subida_nivel as pokemon}
+					<li>{pokemon}</li>
+				{/each}
+			</ul>
+		{:else}
+			<p>No hay pokemon que aprendan este movimiento por subida de nivel.</p>
+		{/if}
+
+		{#if data.pokemones_tm.length > 0}
+			<h4>Por TM</h4>
+			<ul>
+				{#each data.pokemones_tm as pokemon}
+					<li>{pokemon}</li>
+				{/each}
+			</ul>
+		{:else}
+			<p>No hay pokemon que aprendan este movimiento por TM.</p>
+		{/if}
+	</div>
+    {:else}
+	<p>No se encontro el movimiento.</p>
+  {/if}
 
 <button class="volver-link"><a href="/movimientos">Volver a la lista</a></button>
 
@@ -80,42 +82,7 @@
 		margin-top: 2rem;
 	}
 
-	.movimiento-data h2 {
-		font-size: 1.8rem;
-		color: #444;
-		margin-bottom: 1rem;
-	}
-
-	table {
-		width: 100%;
-		border-collapse: collapse;
-		margin: 0 auto;
-		text-align: left;
-	}
-
-	th,
-	td {
-		padding: 0.8rem;
-		border-bottom: 1px solid #ddd;
-	}
-
-	th {
-		font-weight: bold;
-		color: #333;
-	}
-
-	.no-encontrado {
-		color: #900;
-		font-size: 1.2rem;
-		margin: 2rem 0;
-		text-align: center;
-	}
-
-	button {
-		background-color: #04aa6d; 
-		border: none;
-		color: white;
-		padding: 16px 32px;
+	h1, h2, h3, h4 {
 		text-align: center;
 		text-decoration: none;
 		display: inline-block;
@@ -137,6 +104,17 @@
 	.volver-link:hover {
 		background-color: #04aa6d;
 		color: white;
+	}
+
+	ul {
+		list-style-type: disc;
+		padding-left: 40px;
+		margin: 10px 0;
+	}
+
+	li {
+		font-size: 1.1em;
+		margin-bottom: 5px;
 	}
 </style>
 
