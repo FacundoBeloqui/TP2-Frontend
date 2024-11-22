@@ -10,6 +10,8 @@ export async function load({ params }) {
 	let movimiento = await movimientoResp.json();
 
 	return {
-		movimiento
+		movimiento,
+		pokemones_tm: movimiento.pokemones_tm || [],
+        pokemones_subida_nivel: movimiento.pokemones_subida_nivel || []
 	};
 }
