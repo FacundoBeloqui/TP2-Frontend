@@ -2,8 +2,6 @@
 	export let data;
 </script>
 
-<h1>Detalles del movimiento</h1>
-
 {#if data.movimiento}
 	<div>
 		<h2>{data.movimiento.nombre}</h2>
@@ -41,34 +39,71 @@
 			<p>No hay pokemon que aprendan este movimiento por TM.</p>
 		{/if}
 	</div>
-{:else}
+    {:else}
 	<p>No se encontro el movimiento.</p>
-{/if}
+  {/if}
 
-<a href="/movimientos">Volver a la lista</a>
+<button class="volver-link"><a href="/movimientos">Volver a la lista</a></button>
 
 <style>
-	a {
-		color: inherit;
-		text-decoration: none;
+	* {
+		font-family: 'Fira Sans', 'Trebuchet MS', Ubuntu, Helvetica, Arial, sans-serif;
+		color: #333;
+		line-height: 1.5;
+		margin: 0;
+		padding: 0;
+		box-sizing: border-box;
+	}
+
+	html, body {
+		height: 100%;
+	}
+
+	main {
+		padding: 2rem;
+		text-align: center;
+		flex: 1;
+	}
+
+	h1 {
+		text-transform: capitalize;
+		font-size: 2.5rem;
+		color: #000;
+		margin-bottom: 0.5rem;
+	}
+
+	.presentacion {
+		font-size: 1.2rem;
+		color: #555;
+		margin-bottom: 1.5rem;
+	}
+
+	.movimiento-data {
+		margin-top: 2rem;
 	}
 
 	h1, h2, h3, h4 {
 		text-align: center;
+		text-decoration: none;
+		display: inline-block;
+		font-size: 16px;
+		margin: 4px 2px;
+		transition-duration: 0.4s;
+		cursor: pointer;
+		border-radius: 12px;
 	}
 
-	div {
-		margin: 20px auto;
-		padding: 10px;
-		border: 1px solid #ddd;
-		border-radius: 8px;
-		width: 80%;
-		box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
+	.volver-link {
+		background-color: white;
+		color: black;
+		border: 2px solid #04aa6d;
+		margin: 2rem; 
+		display: inline-block; 
 	}
 
-	p {
-		font-size: 1.2em;
-		margin: 5px 0;
+	.volver-link:hover {
+		background-color: #04aa6d;
+		color: white;
 	}
 
 	ul {
