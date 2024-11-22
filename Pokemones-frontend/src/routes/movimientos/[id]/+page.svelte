@@ -21,7 +21,7 @@
 
 <a href="/movimientos">Volver a la lista</a>
 
-<style>
+<style>	
 	a {
 		color: inherit;
 		text-decoration: none;

@@ -21,9 +21,9 @@
 			{#if equipo.Nombre != 'string'}
 				<tr class={equipo.id % 2 == 0 ? 'zero' : 'one'}>
 					<td>{equipo.id}</td>
-					<td><a href="/teams/{equipo.id}">{equipo.nombre}</a></td>
+					<td><a href="/equipos/{equipo.id}">{equipo.nombre}</a></td>
 					<td>{equipo.generacion}</td>
-					<td>{equipo.integrantes}</td>
+					<td><a href="/equipos/{equipo.id}">Ver integrantes</a></td>
 				</tr>
 			{/if}
 		{/each}
@@ -31,20 +31,28 @@
 </table>
 
 <h2>Crear Equipo</h2>
-<form method="POST" action="?/create">
-	<label>
-		Nombre:
+<form method="POST" action="?/create" class="form-create">
+	<div class="form-info">
+		<label>
+			Nombre:
+		</label>
 		<input name="nombre" autocomplete="off" />
-	</label>
-	<label>
-		Generacion:
+	</div>
+	<div class="form-info">
+		<label>
+			Generacion:
+		</label>
 		<input name="generacion" autocomplete="off" />
-	</label>
-	<label>
-		Integrantes:
+	</div>
+	<div class="form-info">
+		<label>
+			Integrantes:
+		</label>
 		<input name="integrantes" autocomplete="off" />
-	</label>
-	<button>Crear</button>
+	</div>
+	<div class="form-submit">
+		<button class="button-submit">Crear</button>
+	</div>
 </form>
 
 
@@ -67,4 +75,37 @@
 	.one {
 		background-color: white;
 	}
+
+	.form-create {
+		margin: 5rem;
+		display: flex;
+		flex-direction: column;
+
+		.form-info {
+			margin: .5rem;
+		}
+
+		label {
+			display: flex;
+			flex-direction: column;
+		}
+
+		input {
+			align-self: center;
+		}
+
+		.form-submit {
+			padding: 2rem 2rem 0 2rem;
+			display: flex;
+			flex-direction: column;
+			border-style: none;
+		}
+
+		.button-submit {
+			//margin-top: .5rem; 
+		}
+	}
+
+
+
 </style>
