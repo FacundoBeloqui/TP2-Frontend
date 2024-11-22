@@ -168,7 +168,7 @@
 	}
 
 	button {
-		background-color: #04aa6d; /* Green */
+		background-color: #04aa6d; 
 		border: none;
 		color: white;
 		padding: 16px 32px;
