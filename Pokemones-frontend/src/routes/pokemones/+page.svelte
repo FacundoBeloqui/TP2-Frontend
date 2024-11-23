@@ -1,8 +1,16 @@
 <script>
+	import Typeahead from 'svelte-typeahead';
 	export let data;
 </script>
 
 <h1>Ésta es la página de pokemones</h1>
+<Typeahead
+	label="Preseleccionar pokemon"
+	placeholder={`Buscar pokemon por id o nombre`}
+	data={data.pokemones}
+	extract={(pokemon) => `${pokemon.id} ${pokemon.identificador}`}
+	inputAfterSelect="clear"
+/>
 
 <table>
 	<thead>
@@ -85,6 +93,11 @@
 </form>
 
 <style>
+	h1 {
+		text-align: center;
+		font-family: Georgia, 'Times New Roman', Times, serif;
+		font-size: 40px;
+	}
 	a {
 		color: inherit;
 		text-decoration: none;

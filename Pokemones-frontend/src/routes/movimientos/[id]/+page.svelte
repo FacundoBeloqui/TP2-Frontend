@@ -102,6 +102,8 @@
 		transition-duration: 0.4s;
 		cursor: pointer;
 		border-radius: 12px;
+		position: relative;
+		right: 680px;
 	}
 
 	.volver-link {

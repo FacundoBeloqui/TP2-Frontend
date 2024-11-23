@@ -168,7 +168,7 @@
 	}
 
 	button {
-		background-color: #04aa6d; 
+		background-color: #04aa6d;
 		border: none;
 		color: white;
 		padding: 16px 32px;
@@ -180,6 +180,8 @@
 		transition-duration: 0.4s;
 		cursor: pointer;
 		border-radius: 12px;
+		position: relative;
+		right: 570px;
 	}
 
 	.volver-link {

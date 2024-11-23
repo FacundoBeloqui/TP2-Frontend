@@ -1,11 +1,8 @@
 <script>
-    export let data;
+	export let data;
 </script>
 
-
 <h1>esta es la pagina de equipos</h1>
-
-
 
 <table>
 	<thead>
@@ -33,21 +30,15 @@
 <h2>Crear Equipo</h2>
 <form method="POST" action="?/create" class="form-create">
 	<div class="form-info">
-		<label>
-			Nombre:
-		</label>
+		<label> Nombre: </label>
 		<input name="nombre" autocomplete="off" />
 	</div>
 	<div class="form-info">
-		<label>
-			Generacion:
-		</label>
+		<label> Generacion: </label>
 		<input name="generacion" autocomplete="off" />
 	</div>
 	<div class="form-info">
-		<label>
-			Integrantes:
-		</label>
+		<label> Integrantes: </label>
 		<input name="integrantes" autocomplete="off" />
 	</div>
 	<div class="form-submit">
@@ -55,9 +46,10 @@
 	</div>
 </form>
 
-
-
 <style>
+	h2 {
+		text-align: center;
+	}
 	a {
 		color: inherit;
 		text-decoration: none;
@@ -82,7 +74,8 @@
 		flex-direction: column;
 
 		.form-info {
-			margin: .5rem;
+			margin: 0.5rem;
+			text-align: center;
 		}
 
 		label {
@@ -102,10 +95,7 @@
 		}
 
 		.button-submit {
-			//margin-top: .5rem; 
+			margin-top: 0.5rem;
 		}
 	}
-
-
-
 </style>
