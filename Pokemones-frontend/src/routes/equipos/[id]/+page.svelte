@@ -4,24 +4,31 @@
 
 <h1>Equipo {data.team.nombre}</h1>
 
-
-
 {#if data.team}
-    <main>
-        <h1>{data.team.nombre}</h1>
-        <p class="presentacion">
+	<main>
+		<h1>{data.team.nombre}</h1>
+		<p class="presentacion">
 			{data.team.nombre}
 		</p>
 		<h2>Integrantes</h2>
 		<div class="presentacion">
 			{#each data.team.integrantes as integrante}
 				<p>Nombre: {integrante.nombre}</p>
-				<p>Naturaleza: <a href="/naturalezas/{integrante.naturaleza.id}">{integrante.naturaleza.nombre}</a></p>
-				<p>Pokemon: <a href="/pokemones/{integrante.pokemon.id}">{integrante.pokemon.identificador}</a></p>
-				<p>Movimientos: 
+				<p>
+					Naturaleza: <a href="/naturalezas/{integrante.naturaleza.id}"
+						>{integrante.naturaleza.nombre}</a
+					>
+				</p>
+				<p>
+					Pokemon: <a href="/pokemones/{integrante.pokemon.id}"
+						>{integrante.pokemon.identificador}</a
+					>
+				</p>
+				<p>
+					Movimientos:
 					{#each integrante.movimientos as movimiento}
 						<a href="/movimientos/{movimiento.id}" class="movs">
-							- {movimiento.nombre} 
+							- {movimiento.nombre}
 						</a>
 					{/each}
 				</p>
@@ -30,22 +37,16 @@
 				{/each} -->
 			{/each}
 		</div>
-    </main>
+	</main>
 {/if}
 
-
-
-
-
-
-
 <style>
-    main {
+	main {
 		padding: 2rem;
 		text-align: center;
 	}
 
-    h1 {
+	h1 {
 		text-transform: capitalize;
 		font-size: 2.5rem;
 		color: #000;
@@ -61,7 +62,6 @@
 	.movs {
 		display: flex;
 		flex-direction: column;
-		//text-align: left;
+		text-align: left;
 	}
-
 </style>

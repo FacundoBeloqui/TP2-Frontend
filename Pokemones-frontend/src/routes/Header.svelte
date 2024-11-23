@@ -129,7 +129,6 @@
 	</nav>
 </header>
 
-
 <style>
 	* {
 		box-sizing: border-box;
@@ -145,13 +144,9 @@
 		padding: 0;
 	}
 	.main-header {
-		//height: 124px;
+		height: 124px;
 		background-color: #202020;
 		background-image: linear-gradient(#3b3b3b, #202020);
-	}
-	.grid-container {
-		//margin: 0 auto;
-		//width: a;
 	}
 	.main-header > .grid-container {
 		position: relative;

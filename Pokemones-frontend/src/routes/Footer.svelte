@@ -24,7 +24,6 @@
 		background-image: linear-gradient(#3b3b3b, #202020);
 		font-size: 0.875rem;
 		color: #dbdbdb;
-		//height: 350px;
 		display: flex;
 		flex-direction: column;
 		justify-content: space-around;
