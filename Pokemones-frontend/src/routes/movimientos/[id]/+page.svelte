@@ -57,7 +57,6 @@
 
 <button class="volver-link"><a href="/movimientos">Volver a la lista</a></button>
 
-
 <style>
 	h1,
 	h2,
@@ -103,6 +102,8 @@
 		transition-duration: 0.4s;
 		cursor: pointer;
 		border-radius: 12px;
+		position: relative;
+		right: 680px;
 	}
 
 	.volver-link {

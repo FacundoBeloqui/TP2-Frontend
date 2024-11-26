@@ -23,39 +23,49 @@ export async function load() {
 
     let movimientos = await responseMovimientos.json();
 
-	let urlNaturalezas = new URL('http://localhost:8000/naturalezas/');
-    const responseNaturalezas = await fetch(urlNaturalezas);
-    if (!responseNaturalezas.ok) {
-        throw new Error(`Response status: ${responseNaturalezas.status}`);
-    }
+	// let urlNaturalezas = new URL('http://localhost:8000/naturalezas/');
+    // const responseNaturalezas = await fetch(urlNaturalezas);
+    // if (!responseNaturalezas.ok) {
+    //     throw new Error(`Response status: ${responseNaturalezas.status}`);
+    // }
 
-    let naturalezas = await responseNaturalezas.json();
+    // let naturalezas = await responseNaturalezas.json();
 
 	return {
 		equipos: equipos,
 		pokemones: pokemones,
 		movimientos: movimientos,
-		naturalezas: naturalezas
+		//naturalezas: naturalezas
 	};
 }
 
 
 export const actions = {
-	create: async ({ cookies, request }) => {
+	create: async ({ request }) => {
 		const data = await request.formData();
+  
+		const nombre = data.get('nombre');
+		const generacion = parseInt(data.get('generacion'));
+		const integrantes = JSON.parse(data.get("integrantes") || "[]");
+
+		const payload = {nombre, generacion, integrantes};
+
+		console.log(payload)
+	
 		let url = new URL('http://localhost:8000/teams/');
 		const response = await fetch(url, {
 			method: 'POST',
 			headers: { 'Content-Type': 'application/json' },
-			body: JSON.stringify({
-                id: data.get('id'),
-				nombre: data.get('nombre'),
-				generacion: parseInt(data.get('generacion')),
-				integrantes: parseInt(data.get('integrantes')),
-			})
+			body: JSON.stringify(payload)
 		});
+	
 		if (!response.ok) {
-			throw new Error(`Response status: ${response.status}`);
+			throw new Error(`Error al crear el equipo. Status: ${response.status}`);
 		}
+	
+		return {
+			success: true,
+			message: 'Equipo creado exitosamente'
+		};
 	}
 };

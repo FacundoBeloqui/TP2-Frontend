@@ -1,8 +1,16 @@
 <script>
+	import Typeahead from 'svelte-typeahead';
 	export let data;
 </script>
 
 <h1>Ésta es la página de movimientos</h1>
+<Typeahead
+	label="Preseleccionar movimiento"
+	placeholder={`Buscar movimiento por id o nombre`}
+	data={data.movimientos}
+	extract={(movimiento) => `${movimiento.id} ${movimiento.nombre}`}
+	inputAfterSelect="clear"
+/>
 
 <table>
 	<thead>
