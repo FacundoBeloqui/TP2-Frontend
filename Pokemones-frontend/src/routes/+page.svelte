@@ -51,6 +51,7 @@
 		display: flex;
 		width: fit-content;
 		gap: 20px;
+		overflow-x: scroll;
 	}
 
 	.imagecarousel img {
