@@ -47,6 +47,19 @@
 		}
 	}
 
+	function verificarSelecciones(event) {
+		const selectElement = event.target;
+		const seleccionados = selectElement.selectedOptions;
+		const mensajeError = document.getElementById(`mensaje-error`);
+
+		if (seleccionados.length > 4) {
+			mensajeError.style.display = 'block';
+			seleccionados[seleccionados.length - 1].selected = false;
+		} else {
+			mensajeError.style.display = 'none';
+		}
+	}
+
 </script>
 
 <h1>Equipo {data.team.nombre}</h1>
@@ -57,6 +70,7 @@
 		<p class="presentacion">
 			{data.team.nombre}
 		</p>
+		<p>Generacion: {data.team.generacion}</p>
 		<h2>Integrantes</h2>
 		<div class="presentacion">
 			{#each data.team.integrantes as integrante}
@@ -82,13 +96,13 @@
 				<!-- {#each Object.entries(integrante.pokemon) as [key, value]}
 					<p>{key}: {value}</p>
 				{/each} -->
+				<button type="button" on:click={() => editarIntegrante(integrante)}>Editar integrante</button>
 			{/each}
-			<button type="button">Editar integrante</button>
 		</div>
 	</main>
 {/if}
 
-<!-- {#if $integrante.id !== null} -->
+{#if $integrante.id !== null}
 	<form class="form-update" on:submit={guardarIntegrante}>
 		<legend>Editar Integrante</legend>
 		<div>
@@ -125,7 +139,7 @@
 
 		<button type="submit">Guardar integrante</button>
 	</form>
-<!-- {/if} -->
+{/if}
 
 <style>
 	main {

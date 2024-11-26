@@ -22,7 +22,7 @@ export const actions = {
 
 		const integrantes = JSON.parse(data.get("integrantes") || "[]");
 
-		let url = new URL(`http://localhost:8000/teams/${data.get("id")}/${data.get("id")}`);
+		let url = new URL(`http://localhost:8000/teams/${data.get("team_id")}/${data.get("integrante_id")}`);
 		const response = await fetch(url, {
 			method: 'POST',
 			headers: { 'Content-Type': 'application/json' },
