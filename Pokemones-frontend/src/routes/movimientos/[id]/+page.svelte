@@ -7,48 +7,46 @@
 {#if data.movimiento}
 	<div>
 		<h2>{data.movimiento.nombre}</h2>
-		<p><strong>Generación:</strong> {data.movimiento.generacion}</p>
-		<p><strong>Tipo:</strong> {data.movimiento.tipo}</p>
-		<p><strong>Poder:</strong> {data.movimiento.poder || '-'}</p>
-		<p><strong>Precisión:</strong> {data.movimiento.accuracy || '-'}</p>
-		<p><strong>PP:</strong> {data.movimiento.pp}</p>
-		<p><strong>Categoría:</strong> {data.movimiento.categoria}</p>
-		<p><strong>Efecto:</strong> {data.movimiento.efecto || 'Sin efecto'}</p>
+		<p class="caracteristicas"><strong>Generación:</strong> {data.movimiento.generacion}</p>
+		<p class="caracteristicas"><strong>Tipo:</strong> {data.movimiento.tipo}</p>
+		<p class="caracteristicas"><strong>Poder:</strong> {data.movimiento.poder || '-'}</p>
+		<p class="caracteristicas"><strong>Precisión:</strong> {data.movimiento.accuracy || '-'}</p>
+		<p class="caracteristicas"><strong>PP:</strong> {data.movimiento.pp}</p>
+		<p class="caracteristicas"><strong>Categoría:</strong> {data.movimiento.categoria}</p>
+		<p class="caracteristicas"><strong>Efecto:</strong> {data.movimiento.efecto || 'Sin efecto'}</p>
 	</div>
 
 	<div>
-		<h3>pokemon que pueden aprender este movimiento</h3>
-
+		<h3>Pokemones que pueden aprender este movimiento</h3>
+		<h4>Por Subida de Nivel</h4>
 		{#if data.pokemones_subida_nivel.length > 0}
-			<h4>Por Subida de Nivel</h4>
 			<ul>
 				{#each data.pokemones_subida_nivel as pokemon}
 					<li>{pokemon}</li>
 				{/each}
 			</ul>
 		{:else}
-			<p>No hay pokemon que aprendan este movimiento por subida de nivel.</p>
+			<p class="no-pokemon">No hay Pokemones que aprendan este movimiento por subida de nivel.</p>
 		{/if}
-
+		<h4>Por TM</h4>
 		{#if data.pokemones_tm.length > 0}
-			<h4>Por TM</h4>
 			<ul>
 				{#each data.pokemones_tm as pokemon}
 					<li>{pokemon}</li>
 				{/each}
 			</ul>
 		{:else}
-			<p>No hay pokemon que aprendan este movimiento por TM.</p>
+			<p class="no-pokemon">No hay Pokemones que aprendan este movimiento por TM.</p>
 		{/if}
+		<h4>Por Grupo de Huevo</h4>
 		{#if data.pokemones_grupo_huevo.length > 0}
-			<h4>Por Grupo de Huevo</h4>
 			<ul>
 				{#each data.pokemones_grupo_huevo as pokemon}
 					<li>{pokemon}</li>
 				{/each}
 			</ul>
 		{:else}
-			<p>No hay pokemon que aprendan este movimiento por Grupo de Huevo.</p>
+			<p class="no-pokemon">No hay Pokemones que aprendan este movimiento por Grupo de Huevo.</p>
 		{/if}
 	</div>
 {:else}
@@ -78,7 +76,12 @@
 		font-size: 1.2em;
 		margin: 5px 0;
 	}
-
+	.caracteristicas {
+		margin-left: 25px;
+	}
+	.no-pokemon {
+		text-align: center;
+	}
 	ul {
 		list-style-type: disc;
 		padding-left: 40px;
@@ -102,7 +105,6 @@
 		transition-duration: 0.4s;
 		cursor: pointer;
 		border-radius: 12px;
-		position: relative;
 		right: 680px;
 	}
 

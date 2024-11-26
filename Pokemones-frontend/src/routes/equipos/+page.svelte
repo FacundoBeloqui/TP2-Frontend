@@ -1,6 +1,6 @@
 <script>
 	import { writable } from 'svelte/store';
-    export let data;
+	export let data;
 
 	let equipo = writable({
 		nombre: '',
@@ -25,38 +25,44 @@
 	let selectedMovimiento = null;
 	export let selectedGeneration = null;
 
-	$: filteredPokemones = selectedGeneration ? data.pokemones.filter(pokemon => pokemon.generacion.includes(parseInt(selectedGeneration))) : data.pokemones;
+	$: filteredPokemones = selectedGeneration
+		? data.pokemones.filter((pokemon) => pokemon.generacion.includes(parseInt(selectedGeneration)))
+		: data.pokemones;
 
-	$: filteredMovimientos = selectedGeneration ? data.movimientos.filter(movimiento => movimiento.generacion === parseInt(selectedGeneration)) : data.movimientos;
+	$: filteredMovimientos = selectedGeneration
+		? data.movimientos.filter(
+				(movimiento) => movimiento.generacion === parseInt(selectedGeneration)
+			)
+		: data.movimientos;
 
 	function agregarIntegrante() {
-		equipo.update(e => {
-			e.integrantes.push({nombre: '', id_pokemon: null, id_naturaleza: null, movimientos: []})
-		})
+		equipo.update((e) => {
+			e.integrantes.push({ nombre: '', id_pokemon: null, id_naturaleza: null, movimientos: [] });
+		});
 	}
 
 	function quitarIntegrante(index) {
-        equipo.update(e => {
-            e.integrantes.splice(index, 1);
-            return e;
-        });
-    }
+		equipo.update((e) => {
+			e.integrantes.splice(index, 1);
+			return e;
+		});
+	}
 
 	function verificarSelecciones(event, index) {
 		const selectElement = event.target;
 		const seleccionados = selectElement.selectedOptions;
 		const mensajeError = document.getElementById(`mensaje-error-${index}`);
-		
+
 		if (seleccionados.length > 4) {
-		mensajeError.style.display = 'block';
-		seleccionados[seleccionados.length - 1].selected = false;
+			mensajeError.style.display = 'block';
+			seleccionados[seleccionados.length - 1].selected = false;
 		} else {
-		mensajeError.style.display = 'none';
+			mensajeError.style.display = 'none';
 		}
 	}
 </script>
 
-<h1>esta es la pagina de equipos</h1>
+<h1>Esta es la pagina de Equipos</h1>
 
 <table>
 	<thead>
@@ -87,7 +93,14 @@
 	<h2>Crear Equipo</h2>
 	<div class="form-info">
 		<label for="nombre"> Nombre: </label>
-		<input id="nombre" type="text" bind:value={$equipo.nombre} required name="nombre" autocomplete="off" />
+		<input
+			id="nombre"
+			type="text"
+			bind:value={$equipo.nombre}
+			required
+			name="nombre"
+			autocomplete="off"
+		/>
 	</div>
 	<div class="form-info">
 		<label for="generacion">Generacion:</label>
@@ -110,7 +123,12 @@
 				<legend>Integrante {index + 1}</legend>
 				<div>
 					<label for="integrante-nombre-{index}">Nombre:</label>
-					<input type="text" id="integrante-nombre-{index}" bind:value={integrante.nombre} required />
+					<input
+						type="text"
+						id="integrante-nombre-{index}"
+						bind:value={integrante.nombre}
+						required
+					/>
 				</div>
 				<div>
 					<label for="integrante-pokemon-{index}">Pokemon:</label>
@@ -126,15 +144,21 @@
 					<select id="integrante-naturaleza-{index}" bind:value={integrante.id_naturaleza}>
 						<option value="" disabled>Selecciona una naturaleza</option>
 						{#each naturalezas as naturaleza}
-						<option value={naturaleza.id}>{naturaleza.nombre}</option>
+							<option value={naturaleza.id}>{naturaleza.nombre}</option>
 						{/each}
 					</select>
 				</div>
 				<div>
 					<label for="integrante-movimientos-{index}">Movimientos:</label>
-					<select id="integrante-movimientos-{index}" bind:value={integrante.movimientos} multiple required on:change={(event) => verificarSelecciones(event, index)}>
+					<select
+						id="integrante-movimientos-{index}"
+						bind:value={integrante.movimientos}
+						multiple
+						required
+						on:change={(event) => verificarSelecciones(event, index)}
+					>
 						<option value="" disabled>Selecciona entre 1 y 4 movimientos:</option>
-						{#each filteredMovimientos as movimiento} 
+						{#each filteredMovimientos as movimiento}
 							<option value={movimiento.id}>{movimiento.nombre}</option>
 						{/each}
 					</select>
@@ -151,6 +175,9 @@
 </form>
 
 <style>
+	h1 {
+		text-align: center;
+	}
 	h2 {
 		margin-top: 2rem;
 		text-align: center;

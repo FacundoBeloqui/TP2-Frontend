@@ -3,7 +3,7 @@
 	export let data;
 </script>
 
-<h1>Ésta es la página de movimientos</h1>
+<h1>Ésta es la página de Movimientos</h1>
 <Typeahead
 	label="Preseleccionar movimiento"
 	placeholder={`Buscar movimiento por id o nombre`}
@@ -44,6 +44,10 @@
 </table>
 
 <style>
+	h1 {
+		text-align: center;
+		margin-top: 30px;
+	}
 	a {
 		color: inherit;
 		text-decoration: none;
