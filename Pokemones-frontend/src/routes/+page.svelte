@@ -1,4 +1,9 @@
 <h1>Bienvenido</h1>
+<p>
+	Dentro de esta pagina podras buscar a tus pokemones favoritos asi como ver los distintos
+	movimientos que hay para cada uno y crear tus propios equipos!!
+</p>
+<p>Hacé click en cualquiera de las 3 categorías para comenzar</p>
 <div class="imagecarousel">
 	<img
 		src="https://assets.isu.pub/document-structure/210405202957-4f9bb1b9ccc0600854b2698babdc5f08/v1/3c617d872690da3721ba8e4c9dc08f52.jpg?width=720&quality=85%2C50"
@@ -40,18 +45,33 @@
 <style>
 	h1 {
 		text-align: center;
-		margin-right: 1550px;
 		font-family: Georgia, 'Times New Roman', Times, serif;
 		font-size: 40px;
 	}
+	p {
+		max-width: 800px;
+		margin: 20px auto;
+		padding: 10px;
+		background: #ffffff;
+		border: 1px solid #ddd;
+		border-radius: 5px;
+		box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+		font-size: 18px;
+		color: #555;
+	}
+	p:hover {
+		background-color: #f9f9f9; /* Cambiar fondo al pasar el cursor */
+		box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Más sombra */
+	}
 	.imagecarousel {
 		position: relative;
-		height: 233px;
+		height: 300px;
 		margin-bottom: 30px;
 		display: flex;
 		width: fit-content;
 		gap: 20px;
 		overflow-x: scroll;
+		margin-top: 60px;
 	}
 
 	.imagecarousel img {
