@@ -6,18 +6,18 @@
 
 	function searchedPokemon(pokemon) {
 		pokemonSeleccionado = pokemon;
-		console.log(pokemon)
+		console.log(pokemon);
 		window.location.href = `/pokemones/${pokemon.id}`;
 	}
 </script>
 
-<h1>Ésta es la página de pokemones</h1>
+<h1>Ésta es la página de Pokemones</h1>
 <Typeahead
 	label="Preseleccionar pokemon"
 	placeholder={`Buscar pokemon por id o nombre`}
 	data={data.pokemones}
 	extract={(pokemon) => `${pokemon.id} ${pokemon.identificador}`}
-	on:select={pokemon => searchedPokemon(pokemon)}
+	on:select={(pokemon) => searchedPokemon(pokemon)}
 	inputAfterSelect="clear"
 />
 
