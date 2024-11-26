@@ -1,6 +1,11 @@
 <script>
 	import Typeahead from 'svelte-typeahead';
 	export let data;
+
+	function searchedMovimiento(movimiento) {
+		console.log(movimiento.detail.original.id);
+		window.location.href = `/movimientos/${movimiento.detail.original.id}`;
+	}
 </script>
 
 <h1>Ésta es la página de Movimientos</h1>
@@ -9,6 +14,7 @@
 	placeholder={`Buscar movimiento por id o nombre`}
 	data={data.movimientos}
 	extract={(movimiento) => `${movimiento.id} ${movimiento.nombre}`}
+	on:select={(movimiento) => searchedMovimiento(movimiento)}
 	inputAfterSelect="clear"
 />
 

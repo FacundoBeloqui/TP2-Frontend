@@ -26,11 +26,11 @@ export const actions = {
 				experiencia_base: parseInt(data.get('experiencia_base'), 10),
 				imagen: data.get('imagen'),
 				grupo_de_huevo: data.get('grupo_de_huevo'),
-				generacion: data.get('generacion')?.split(','),
-				habilidades: data.get('habilidades')?.split(','),
-				evoluciones_inmediatas: data.get('evoluciones_inmediatas')?.split(','),
-				tipo: data.get('tipo')?.split(','),
-				estadisticas: JSON.parse(data.get('estadisticas')),
+				generacion: data.get('generacion' || '[]'),
+				habilidades: data.get('habilidades' || '[]'),
+				evoluciones_inmediatas: data.get('evoluciones_inmediatas' || '[]'),
+				tipo: data.get('tipo' || '[]'),
+				estadisticas: JSON.parse(data.get('estadisticas' || '{}')),
 				id_especie: parseInt(data.get('id_especie'))
 			})
 		});

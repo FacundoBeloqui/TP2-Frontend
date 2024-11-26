@@ -2,12 +2,9 @@
 	import Typeahead from 'svelte-typeahead';
 	export let data;
 
-	let pokemonSeleccionado = null;
-
 	function searchedPokemon(pokemon) {
-		pokemonSeleccionado = pokemon;
-		console.log(pokemon);
-		window.location.href = `/pokemones/${pokemon.id}`;
+		console.log(pokemon.detail.original.id);
+		window.location.href = `/pokemones/${pokemon.detail.original.id}`;
 	}
 </script>
 
@@ -74,10 +71,17 @@
 		Grupo De Huevo:
 		<input name="grupo_de_huevo" autocomplete="off" />
 	</label>
-	<label>
-		Generacion:
-		<input name="generacion" autocomplete="off" />
-	</label>
+	<label for="generacion">Generacion:</label>
+	<select id="generacion" name="generacion" required>
+		<option value="1">Generación 1</option>
+		<option value="2">Generación 2</option>
+		<option value="3">Generación 3</option>
+		<option value="4">Generación 4</option>
+		<option value="5">Generación 5</option>
+		<option value="6">Generación 6</option>
+		<option value="7">Generación 7</option>
+		<option value="8">Generación 8</option>
+	</select>
 	<label>
 		Habilidades:
 		<input name="habilidades" autocomplete="off" />
