@@ -11,22 +11,60 @@ export async function load({ params }) {
 
 	console.log(team)
 
+	let urlPokemones = new URL('http://localhost:8000/pokemones/');
+	const responsePokemones = await fetch(urlPokemones);
+	if (!responsePokemones.ok) {
+		throw new Error(`Response status: ${responsePokemones.status}`);
+	}
+
+	let pokemones = await responsePokemones.json();
+
+	let urlMovimientos = new URL('http://localhost:8000/movimientos/');
+    const responseMovimientos = await fetch(urlMovimientos);
+    if (!responseMovimientos.ok) {
+        throw new Error(`Response status: ${responseMovimientos.status}`);
+    }
+
+    let movimientos = await responseMovimientos.json();
+
 	return {
-		team
+		team: team,
+		pokemones: pokemones,
+		movimientos: movimientos
 	};
 }
+
+// export async function load({ params }) {
+// 	let teamUrl = new URL(`http://localhost:8000/teams/${params.team_id}/${params.integrante_id}`);
+// 	const teamResp = await fetch(teamUrl);
+// 	if (!teamResp.ok) {
+// 		error(teamResp.status);
+// 	}
+
+// 	let team = await teamResp.json();
+
+// 	console.log(team)
+
+// 	return {
+// 		team: team
+// 	};
+// }
 
 export const actions = {
 	update: async ({request}) => {
 		const data = await request.formData();
 
-		const integrantes = JSON.parse(data.get("integrantes") || "[]");
+		//const integrantes = JSON.parse(data.get("integrantes") || "{}");
 
-		let url = new URL(`http://localhost:8000/teams/${data.get("team_id")}/${data.get("integrante_id")}`);
+		const {team_id, integrante_id, integrante} = data
+
+		const payload = {integrante}
+
+		let url = new URL(`http://localhost:8000/teams/${team_id}/${integrante_id}`);
 		const response = await fetch(url, {
-			method: 'POST',
+			method: 'PUT',
 			headers: { 'Content-Type': 'application/json' },
-			body: JSON.stringify(integrantes)
+			body: JSON.stringify(payload)
 		});
 
 		if (!response.ok) {
