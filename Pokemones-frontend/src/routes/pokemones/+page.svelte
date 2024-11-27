@@ -9,14 +9,16 @@
 </script>
 
 <h1>Ésta es la página de Pokemones</h1>
-<Typeahead
-	label="Preseleccionar pokemon"
-	placeholder={`Buscar pokemon por id o nombre`}
-	data={data.pokemones}
-	extract={(pokemon) => `${pokemon.id} ${pokemon.identificador}`}
-	on:select={(pokemon) => searchedPokemon(pokemon)}
-	inputAfterSelect="clear"
-/>
+<div class="buscador">
+	<Typeahead
+		label="Preseleccionar pokemon"
+		placeholder={`Buscar pokemon por id o nombre`}
+		data={data.pokemones}
+		extract={(pokemon) => `${pokemon.id} ${pokemon.identificador}`}
+		on:select={(pokemon) => searchedPokemon(pokemon)}
+		inputAfterSelect="clear"
+	/>
+</div>
 
 <table>
 	<thead>

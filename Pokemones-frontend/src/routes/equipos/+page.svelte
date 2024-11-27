@@ -23,7 +23,7 @@
 
 	let selectedPokemon = null;
 	let selectedMovimiento = null;
-	let selectedGeneration = null;
+	export let selectedGeneration = null;
 
 	$: filteredPokemones = selectedGeneration
 		? data.pokemones.filter((pokemon) => pokemon.generacion.includes(parseInt(selectedGeneration)))
@@ -89,8 +89,8 @@
 	</tbody>
 </table>
 
-<h2>Crear Equipo</h2>
 <form method="POST" action="?/create" class="form-create">
+	<h2>Crear Equipo</h2>
 	<div class="form-info">
 		<label for="nombre"> Nombre: </label>
 		<input
@@ -179,6 +179,7 @@
 		text-align: center;
 	}
 	h2 {
+		margin-top: 2rem;
 		text-align: center;
 	}
 	a {
