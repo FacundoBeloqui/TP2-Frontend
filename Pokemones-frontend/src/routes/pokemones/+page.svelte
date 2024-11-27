@@ -112,6 +112,7 @@
 		text-align: center;
 		font-family: Georgia, 'Times New Roman', Times, serif;
 		font-size: 40px;
+		margin: 4rem 3rem;
 	}
 	a {
 		color: inherit;

@@ -23,19 +23,19 @@ export async function load() {
 
     let movimientos = await responseMovimientos.json();
 
-	// let urlNaturalezas = new URL('http://localhost:8000/naturalezas/');
-    // const responseNaturalezas = await fetch(urlNaturalezas);
-    // if (!responseNaturalezas.ok) {
-    //     throw new Error(`Response status: ${responseNaturalezas.status}`);
-    // }
+	let urlNaturalezas = new URL('http://localhost:8000/naturalezas/');
+    const responseNaturalezas = await fetch(urlNaturalezas);
+    if (!responseNaturalezas.ok) {
+        throw new Error(`Response status: ${responseNaturalezas.status}`);
+    }
 
-    // let naturalezas = await responseNaturalezas.json();
+    let naturalezas = await responseNaturalezas.json();
 
 	return {
 		equipos: equipos,
 		pokemones: pokemones,
 		movimientos: movimientos,
-		//naturalezas: naturalezas
+		naturalezas: naturalezas
 	};
 }
 

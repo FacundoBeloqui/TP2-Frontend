@@ -9,8 +9,6 @@ export async function load({ params }) {
 
 	let team = await teamResp.json();
 
-	console.log(team)
-
 	let urlPokemones = new URL('http://localhost:8000/pokemones/');
 	const responsePokemones = await fetch(urlPokemones);
 	if (!responsePokemones.ok) {
@@ -27,28 +25,21 @@ export async function load({ params }) {
 
     let movimientos = await responseMovimientos.json();
 
+	let urlNaturalezas = new URL('http://localhost:8000/naturalezas/');
+    const responseNaturalezas = await fetch(urlNaturalezas);
+    if (!responseNaturalezas.ok) {
+        throw new Error(`Response status: ${responseNaturalezas.status}`);
+    }
+
+    let naturalezas = await responseNaturalezas.json();
+
 	return {
 		team: team,
 		pokemones: pokemones,
-		movimientos: movimientos
+		movimientos: movimientos,
+		naturalezas: naturalezas
 	};
 }
-
-// export async function load({ params }) {
-// 	let teamUrl = new URL(`http://localhost:8000/teams/${params.team_id}/${params.integrante_id}`);
-// 	const teamResp = await fetch(teamUrl);
-// 	if (!teamResp.ok) {
-// 		error(teamResp.status);
-// 	}
-
-// 	let team = await teamResp.json();
-
-// 	console.log(team)
-
-// 	return {
-// 		team: team
-// 	};
-// }
 
 export const actions = {
 	update: async ({request}) => {
