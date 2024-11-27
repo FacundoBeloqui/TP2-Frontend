@@ -1,4 +1,5 @@
 <script>
+	import { error } from '@sveltejs/kit';
 	import { writable } from 'svelte/store';
 	export let data;
 
@@ -14,12 +15,6 @@
 			}
 		]
 	});
-
-	let naturalezas = [
-		{ id: 1, nombre: 'Adamant' },
-		{ id: 2, nombre: 'Modest' },
-		{ id: 3, nombre: 'Jolly' }
-	];
 
 	let selectedPokemon = null;
 	let selectedMovimiento = null;
@@ -41,23 +36,15 @@
 		});
 	}
 
-	function quitarIntegrante(index) {
-		equipo.update((e) => {
-			e.integrantes.splice(index, 1);
-			return e;
-		});
-	}
+	let errorMessage = "";
 
-	function verificarSelecciones(event, index) {
-		const selectElement = event.target;
-		const seleccionados = selectElement.selectedOptions;
-		const mensajeError = document.getElementById(`mensaje-error-${index}`);
+	function verificarCantidadMovimientos(event) {
+		const movimientosSeleccionados = event.target.selectedOptions;
 
-		if (seleccionados.length > 4) {
-			mensajeError.style.display = 'block';
-			seleccionados[seleccionados.length - 1].selected = false;
+		if (movimientosSeleccionados.length > 4) {
+			errorMessage = "No puedes elegir mas de 4 movimientos"
 		} else {
-			mensajeError.style.display = 'none';
+			errorMessage = "";
 		}
 	}
 </script>
@@ -81,7 +68,7 @@
 					<td><a href="/equipos/{equipo.id}">{equipo.nombre}</a></td>
 					<td>{equipo.generacion}</td>
 					<td>
-						<button><a href="/equipos/{equipo.id}">Ver integrantes</a></button>
+						<button class="info-integrante"><a href="/equipos/{equipo.id}">Ver integrantes</a></button>
 					</td>
 				</tr>
 			{/if}
@@ -115,24 +102,23 @@
 			<option value="8">Generación 8</option>
 		</select>
 	</div>
-	<div>
+	<div class="integrante-form">
 		<input type="hidden" name="integrantes" value={JSON.stringify($equipo.integrantes)} />
 		<h3>Integrantes del equipo</h3>
-		{#each $equipo.integrantes as integrante, index}
+		{#each $equipo.integrantes as integrante}
 			<fieldset>
-				<legend>Integrante {index + 1}</legend>
 				<div>
-					<label for="integrante-nombre-{index}">Nombre:</label>
+					<label for="integrante-nombre">Nombre:</label>
 					<input
 						type="text"
-						id="integrante-nombre-{index}"
+						id="integrante-nombre"
 						bind:value={integrante.nombre}
 						required
 					/>
 				</div>
 				<div>
-					<label for="integrante-pokemon-{index}">Pokemon:</label>
-					<select id="integrante-pokemon-{index}" bind:value={integrante.id_pokemon}>
+					<label for="integrante-pokemon">Pokemon:</label>
+					<select id="integrante-pokemon" bind:value={integrante.id_pokemon}>
 						<option value="" disabled>Selecciona un pokemon</option>
 						{#each filteredPokemones as pokemon}
 							<option value={pokemon.id}>{pokemon.identificador}</option>
@@ -140,30 +126,34 @@
 					</select>
 				</div>
 				<div>
-					<label for="integrante-naturaleza-{index}">Naturaleza:</label>
-					<select id="integrante-naturaleza-{index}" bind:value={integrante.id_naturaleza}>
+					<label for="integrante-naturaleza">Naturaleza:</label>
+					<select id="integrante-naturaleza" bind:value={integrante.id_naturaleza}>
 						<option value="" disabled>Selecciona una naturaleza</option>
-						{#each naturalezas as naturaleza}
+						{#each data.naturalezas as naturaleza}
 							<option value={naturaleza.id}>{naturaleza.nombre}</option>
 						{/each}
 					</select>
 				</div>
 				<div>
-					<label for="integrante-movimientos-{index}">Movimientos:</label>
+					<label for="integrante-movimientos">Movimientos:</label>
 					<select
-						id="integrante-movimientos-{index}"
+						id="integrante-movimientos"
 						bind:value={integrante.movimientos}
 						multiple
 						required
-						on:change={(event) => verificarSelecciones(event, index)}
+						on:change={(event) => verificarSelecciones(event)}
 					>
 						<option value="" disabled>Selecciona entre 1 y 4 movimientos:</option>
 						{#each filteredMovimientos as movimiento}
 							<option value={movimiento.id}>{movimiento.nombre}</option>
 						{/each}
 					</select>
+					{#if errorMessage} 
+						<div class="error-message">
+							{errorMessage}
+						</div>
+					{/if}
 				</div>
-				<button type="button" on:click={() => quitarIntegrante(index)}>Eliminar integrante</button>
 			</fieldset>
 		{/each}
 	</div>
@@ -177,7 +167,15 @@
 <style>
 	h1 {
 		text-align: center;
+		font-family: Georgia, 'Times New Roman', Times, serif;
+		font-size: 40px;
+		margin: 4rem 3rem;
 	}
+
+	.info-integrante {
+		margin: .5rem;
+	}
+
 	h2 {
 		margin-top: 2rem;
 		text-align: center;
@@ -201,13 +199,21 @@
 	}
 
 	.form-create {
-		margin: 5rem;
 		display: flex;
 		flex-direction: column;
+		margin: 5rem auto;
+		border: 2px solid red;
+		border-radius: 5px;
+		padding: 20px;
+		width: 300px;
 
 		.form-info {
 			margin: 0.5rem;
 			text-align: center;
+		}
+
+		.integrante-form {
+			margin-bottom: 1.5rem;
 		}
 
 		label {
@@ -226,8 +232,15 @@
 			border-style: none;
 		}
 
-		/* .button-submit {
-			margin-top: 0.5rem;
-		} */
+		.error-message {
+			color: red;
+			font-weight: bold;
+			position: absolute;
+			top: 20px;
+			right: 20px;
+			background-color: rgba(255, 0, 0, 0.2);
+			padding: 10px;
+			border-radius: 5px;
+		}
 	}
 </style>

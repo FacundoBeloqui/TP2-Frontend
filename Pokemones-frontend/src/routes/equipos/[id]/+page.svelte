@@ -10,18 +10,10 @@
 		movimientos: []
 	});
 
-	let naturalezas = [
-		{ id: 1, nombre: 'Adamant' },
-		{ id: 2, nombre: 'Modest' },
-		{ id: 3, nombre: 'Jolly' }
-	];
-
 	function editarIntegrante(integranteSeleccionado) {
 		integrante.set({ ...integranteSeleccionado });
 	}
 
-	// let selectedPokemon = null;
-	// let selectedMovimiento = null;
 	let selectedGeneration = null;
 
 	$ : selectedGeneration = data.team ? data.team.generacion : null;
@@ -31,41 +23,40 @@
 	$: filteredMovimientos = selectedGeneration ? data.movimientos.filter(movimiento => movimiento.generacion === parseInt(selectedGeneration)) : data.movimientos;
 
 
-	// async function guardarIntegrante() {
-	// 	const currentIntegrante = $integrante;
+	async function guardarIntegrante() {
+		const currentIntegrante = $integrante;
 
-	// 	console.log(currentIntegrante)
+		console.log(currentIntegrante)
 
-	// 	// const integranteUpdate = {
-	// 	// 	nombre: currentIntegrante.nombre,
-	// 	// 	id_pokemon: currentIntegrante.pokemon.id,
-	// 	// 	id_naturaleza: currentIntegrante.naturaleza.id,
-	// 	// 	movimientos: currentIntegrante.movimientos.map(mov => mov.id) // Asegúrate de que sea un array de IDs
-	// 	// };
+		// const integranteUpdate = {
+		// 	nombre: currentIntegrante.nombre,
+		// 	id_pokemon: currentIntegrante.pokemon.id,
+		// 	id_naturaleza: currentIntegrante.naturaleza.id,
+		// 	movimientos: currentIntegrante.movimientos.map(mov => mov.id) // Asegúrate de que sea un array de IDs
+		// };
 
-	// 	const response = await fetch(`/teams/${data.team.id}/${currentIntegrante.id}`, {
-	// 	method: 'PUT',
-	// 	headers: { 'Content-Type': 'application/json' },
-	// 	body: JSON.stringify(currentIntegrante)
-	// 	});
+		const response = await fetch(`/teams/${data.team.id}/${currentIntegrante.id}`, {
+		method: 'PUT',
+		headers: { 'Content-Type': 'application/json' },
+		body: JSON.stringify(currentIntegrante)
+		});
 
-	// 	if (response.ok) {
-	// 		alert('Integrante actualizado correctamente');
-	// 	} else {
-	// 		alert('Error al actualizar el integrante');
-	// 	}
-	// }
-
-	function verificarSelecciones(event) {
-		const selectElement = event.target;
-		const seleccionados = selectElement.selectedOptions;
-		const mensajeError = document.getElementById(`mensaje-error`);
-
-		if (seleccionados.length > 4) {
-			mensajeError.style.display = 'block';
-			seleccionados[seleccionados.length - 1].selected = false;
+		if (response.ok) {
+			alert('Integrante actualizado correctamente');
 		} else {
-			mensajeError.style.display = 'none';
+			alert('Error al actualizar el integrante');
+		}
+	}
+
+	let errorMessage = "";
+
+	function verificarCantidadMovimientos(event) {
+		const movimientosSeleccionados = event.target.selectedOptions;
+
+		if (movimientosSeleccionados.length > 4) {
+			errorMessage = "No puedes elegir mas de 4 movimientos"
+		} else {
+			errorMessage = "";
 		}
 	}
 
@@ -75,50 +66,49 @@
 
 {#if data.team}
 	<main>
-		<h1>{data.team.nombre}</h1>
-		<p class="presentacion">
-			{data.team.nombre}
-		</p>
-		<p>Generacion: {data.team.generacion}</p>
+		<p class="team-generacion">Generacion: {data.team.generacion}</p>
 		<h2>Integrantes</h2>
 		<div class="presentacion">
 			{#each data.team.integrantes as integrante}
-				<p>Nombre: {integrante.nombre}</p>
-				<p>
-					Naturaleza: <a href="/naturalezas/{integrante.naturaleza.id}"
-						>{integrante.naturaleza.nombre}</a
-					>
-				</p>
-				<p>
-					Pokemon: <a href="/pokemones/{integrante.pokemon.id}"
-						>{integrante.pokemon.identificador}</a
-					>
-				</p>
-				<p>
-					Movimientos:
-					{#each integrante.movimientos as movimiento}
-						<a href="/movimientos/{movimiento.id}" class="movs">
-							- {movimiento.nombre}
-						</a>
-					{/each}
-				</p>
-				<!-- {#each Object.entries(integrante.pokemon) as [key, value]}
-					<p>{key}: {value}</p>
-				{/each} -->
-				<button type="button" on:click={() => editarIntegrante(integrante)}>Editar integrante</button>
+				<div class="integrante">
+					<p>Nombre: {integrante.nombre}</p>
+					<p>
+						Naturaleza: {integrante.naturaleza.nombre}
+					</p>
+					<p>
+						Pokemon: <a href="/pokemones/{integrante.pokemon.id}"
+							>{integrante.pokemon.identificador}</a
+						>
+					</p>
+					<p>
+						Movimientos:
+						{#if data.team.movimientos}
+							{#each integrante.movimientos as movimiento}
+								<a href="/movimientos/{movimiento.id}" class="movs">
+									- {movimiento.nombre}
+								</a>
+							{/each}
+						{:else}
+								-
+						{/if}
+					</p>
+					<div class="form-edit">
+						<button type="button" on:click={() => editarIntegrante(integrante)}>Editar integrante</button>
+					</div>
+				</div>
 			{/each}
 		</div>
 	</main>
 {/if}
 
 {#if $integrante.id !== null}
-	<form class="form-update" method="PUT" action="?/update">
-		<legend>Editar Integrante</legend>
-		<div>
+	<form class="form-update" method="PUT" action="?/update" on:submit={guardarIntegrante}>
+		<p>Editar Integrante</p>
+		<div class="form-info">
 			<label for="integrante-nombre">Nombre:</label>
 			<input type="text" id="integrante-nombre" bind:value={$integrante.nombre} required />
 		</div>
-		<div>
+		<div class="form-info">
 			<label for="integrante-pokemon">Pokemon:</label>
 			<select id="integrante-pokemon" bind:value={$integrante.pokemon.id}>
 				<option value="" disabled>Selecciona un pokemon</option>
@@ -127,16 +117,16 @@
 				{/each}
 			</select>
 		</div>
-		<div>
+		<div class="form-info">
 			<label for="integrante-naturaleza">Naturaleza:</label>
 			<select id="integrante-naturaleza" bind:value={$integrante.naturaleza.id}>
 				<option value="" disabled>Selecciona una naturaleza</option>
-				{#each naturalezas as naturaleza}
-				<option value={naturaleza.id}>{naturaleza.nombre}</option>
+				{#each data.naturalezas as naturaleza}
+					<option value={naturaleza.id}>{naturaleza.nombre}</option>
 				{/each}
 			</select>
 		</div>
-		<div>
+		<div class="form-info">
 			<label for="integrante-movimientos">Movimientos:</label>
 			<select id="integrante-movimientos" bind:value={$integrante.movimientos} multiple required on:change={(event) => verificarSelecciones(event)}>
 				<option value="" disabled>Selecciona entre 1 y 4 movimientos:</option>
@@ -145,8 +135,9 @@
 				{/each}
 			</select>
 		</div>
-
-		<button type="submit">Guardar integrante</button>
+		<div class="form-submit">
+			<button type="submit">Guardar integrante</button>
+		</div>
 	</form>
 {/if}
 
@@ -160,18 +151,91 @@
 		text-transform: capitalize;
 		font-size: 2.5rem;
 		color: #000;
-		margin-bottom: 0.5rem;
+		margin: 4rem .5rem .5rem 2rem;
 	}
 
 	.presentacion {
 		font-size: 1.2rem;
 		color: #555;
 		margin-bottom: 1.5rem;
+		display: flex;
+		flex-direction: row;
+		align-items: start;
+		padding: 1.5rem;
+
+		.integrante {
+			border: 2px solid red;
+			border-radius: 5px;
+			width: 300px;
+			padding: 1.5rem;
+			margin: 0 auto;
+		}
+
+		.form-edit {
+			margin: 2rem auto 0 auto;
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			border-style: none;
+			align-items: center;
+		}
+	}
+
+	a {
+		color: black;
+		margin-top: .5rem;
+	}
+
+	.team-generacion {
+		text-align: left;
+		font-size: 1.5rem;
+		border-bottom: 2px solid black;
+		padding-bottom: .5rem;
 	}
 
 	.movs {
 		display: flex;
 		flex-direction: column;
 		text-align: left;
+	}
+
+	.form-update {
+		margin: 5rem auto;
+		display: flex;
+		flex-direction: column;
+		border: 2px solid red;
+		border-radius: 5px;
+		padding: 20px;
+		width: 300px;
+
+		p {
+			text-align: center;
+			margin-bottom: 2rem;
+			font-size: 25px;
+		}
+
+		.form-info {
+			margin: 0.5rem;
+			text-align: center;
+		}
+
+		label {
+			display: flex;
+			flex-direction: column;
+		}
+
+		input {
+			align-self: center;
+		}
+
+		.form-submit {
+			padding: 2rem 2rem 0 2rem;
+			display: flex;
+			flex-direction: column;
+			justify-self: center;
+			border-style: none;
+			text-align: center;
+			align-items: center;
+		}
 	}
 </style>
