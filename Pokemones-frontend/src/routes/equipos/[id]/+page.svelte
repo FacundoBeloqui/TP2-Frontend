@@ -24,28 +24,37 @@
 	// let selectedMovimiento = null;
 	let selectedGeneration = null;
 
-	$: filteredPokemones = selectedGeneration ? data.pokemones.filter(pokemon => pokemon.generacion.includes(parseInt(selectedGeneration))) : data.pokemones;
+	$ : selectedGeneration = data.team ? data.team.generacion : null;
+
+	$: filteredPokemones = selectedGeneration ? data.pokemones.filter(pokemon => Array.isArray(pokemon.generacion) && pokemon.generacion.includes(parseInt(selectedGeneration))) : data.pokemones;
 
 	$: filteredMovimientos = selectedGeneration ? data.movimientos.filter(movimiento => movimiento.generacion === parseInt(selectedGeneration)) : data.movimientos;
 
 
-	 // Función para guardar los cambios del integrante
-	async function guardarIntegrante() {
-		const currentIntegrante = $integrante;
+	// async function guardarIntegrante() {
+	// 	const currentIntegrante = $integrante;
 
-		const response = await fetch(`/teams/${data.team.id}/${currentIntegrante.id}`, {
-		method: 'PUT',
-		headers: { 'Content-Type': 'application/json' },
-		body: JSON.stringify(currentIntegrante)
-		});
+	// 	console.log(currentIntegrante)
 
-		if (response.ok) {
-		alert('Integrante actualizado correctamente');
-		// Realiza alguna acción después de guardar, como redirigir o actualizar la vista
-		} else {
-		alert('Error al actualizar el integrante');
-		}
-	}
+	// 	// const integranteUpdate = {
+	// 	// 	nombre: currentIntegrante.nombre,
+	// 	// 	id_pokemon: currentIntegrante.pokemon.id,
+	// 	// 	id_naturaleza: currentIntegrante.naturaleza.id,
+	// 	// 	movimientos: currentIntegrante.movimientos.map(mov => mov.id) // Asegúrate de que sea un array de IDs
+	// 	// };
+
+	// 	const response = await fetch(`/teams/${data.team.id}/${currentIntegrante.id}`, {
+	// 	method: 'PUT',
+	// 	headers: { 'Content-Type': 'application/json' },
+	// 	body: JSON.stringify(currentIntegrante)
+	// 	});
+
+	// 	if (response.ok) {
+	// 		alert('Integrante actualizado correctamente');
+	// 	} else {
+	// 		alert('Error al actualizar el integrante');
+	// 	}
+	// }
 
 	function verificarSelecciones(event) {
 		const selectElement = event.target;
@@ -103,7 +112,7 @@
 {/if}
 
 {#if $integrante.id !== null}
-	<form class="form-update" on:submit={guardarIntegrante}>
+	<form class="form-update" method="PUT" action="?/update">
 		<legend>Editar Integrante</legend>
 		<div>
 			<label for="integrante-nombre">Nombre:</label>
