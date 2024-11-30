@@ -41,30 +41,44 @@ export async function load({ params }) {
 	};
 }
 
+
 export const actions = {
-	update: async ({ request }) => {
+	update: async ({ request, params }) => {
 		const data = await request.formData();
 
-		//const integrantes = JSON.parse(data.get("integrantes") || "{}");
+		const idIntegrante = parseInt(data.get('id_integrante')); // Asegúrate de que el id_integrante se esté pasando correctamente
+		const nombre = data.get('nombre');
+		const idPokemon = parseInt(data.get('id_pokemon'));
+		const idNaturaleza = parseInt(data.get('id_naturaleza'));
+		const movimientos = data.get("movimientos") || "[]"; // Asegúrate de que los movimientos se estén pasando correctamente
 
-		const { team_id, integrante_id, integrante } = data
+		// Crea el payload según la estructura esperada
+		const payload = {
+			id_integrante: idIntegrante,
+			nombre: nombre,
+			id_pokemon: idPokemon,
+			id_naturaleza: idNaturaleza,
+			movimientos: movimientos
+		};
 
-		const payload = { integrante }
+		console.log(payload);
 
-		let url = new URL(`http://localhost:8000/teams/${team_id}`);
+		const teamId = params.team.id; // Asegúrate de que el team_id esté disponible en los parámetros
+		let url = new URL(`http://localhost:8000/teams/1`); // Cambia la URL para incluir el team_id
+
 		const response = await fetch(url, {
-			method: 'POST',
+			method: 'POST', // O 'PATCH', según lo que necesites
 			headers: { 'Content-Type': 'application/json' },
 			body: JSON.stringify(payload)
 		});
 
 		if (!response.ok) {
-			throw new Error(`Error al editar integrantes. Status: ${response.status}`);
+			throw new Error(`Error al actualizar el integrante. Status: ${response.status}`);
 		}
 
 		return {
 			success: true,
-			message: 'Integrante editado exitosamente'
+			message: 'Integrante actualizado exitosamente'
 		};
 	}
-}
+};

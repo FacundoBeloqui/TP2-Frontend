@@ -110,17 +110,28 @@
 		</div>
 	</main>
 {/if}
-
 {#if $integrante.id !== null}
-	<form class="form-update" method="POST" action="?/update" on:submit={guardarIntegrante}>
+	<form class="form-update" method="POST" action="?/update">
 		<p>Editar Integrante</p>
+		<input type="hidden" name="id_integrante" value={$integrante.id} />
 		<div class="form-info">
 			<label for="integrante-nombre">Nombre:</label>
-			<input type="text" id="integrante-nombre" bind:value={$integrante.nombre} required />
+			<input
+				type="text"
+				id="integrante-nombre"
+				name="nombre"
+				bind:value={$integrante.nombre}
+				required
+			/>
 		</div>
 		<div class="form-info">
 			<label for="integrante-pokemon">Pokemon:</label>
-			<select id="integrante-pokemon" bind:value={$integrante.pokemon.id}>
+			<select
+				id="integrante-pokemon"
+				name="id_pokemon"
+				bind:value={$integrante.pokemon.id}
+				required
+			>
 				<option value="" disabled>Selecciona un pokemon</option>
 				{#each filteredPokemones as pokemon}
 					<option value={pokemon.id}>{pokemon.identificador}</option>
@@ -129,7 +140,12 @@
 		</div>
 		<div class="form-info">
 			<label for="integrante-naturaleza">Naturaleza:</label>
-			<select id="integrante-naturaleza" bind:value={$integrante.naturaleza.id}>
+			<select
+				id="integrante-naturaleza"
+				name="id_naturaleza"
+				bind:value={$integrante.naturaleza.id}
+				required
+			>
 				<option value="" disabled>Selecciona una naturaleza</option>
 				{#each data.naturalezas as naturaleza}
 					<option value={naturaleza.id}>{naturaleza.nombre}</option>
@@ -140,6 +156,7 @@
 			<label for="integrante-movimientos">Movimientos:</label>
 			<select
 				id="integrante-movimientos"
+				name="movimientos"
 				bind:value={$integrante.movimientos}
 				multiple
 				required
@@ -151,9 +168,7 @@
 				{/each}
 			</select>
 		</div>
-		<div class="form-submit">
-			<button type="submit">Guardar integrante</button>
-		</div>
+		<div class="form-submit"><button type="submit">Guardar integrante</button></div>
 	</form>
 {/if}
 
