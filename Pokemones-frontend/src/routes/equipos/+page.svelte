@@ -33,6 +33,7 @@
 	function agregarIntegrante() {
 		equipo.update((e) => {
 			e.integrantes.push({ nombre: '', id_pokemon: null, id_naturaleza: null, movimientos: [] });
+			return e;
 		});
 	}
 
@@ -141,7 +142,7 @@
 						bind:value={integrante.movimientos}
 						multiple
 						required
-						on:change={(event) => verificarSelecciones(event)}
+						on:change={(event) => verificarCantidadMovimientos(event)}
 					>
 						<option value="" disabled>Selecciona entre 1 y 4 movimientos:</option>
 						{#each filteredMovimientos as movimiento}

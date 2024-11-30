@@ -128,7 +128,7 @@
 		</div>
 		<div class="form-info">
 			<label for="integrante-movimientos">Movimientos:</label>
-			<select id="integrante-movimientos" bind:value={$integrante.movimientos} multiple required on:change={(event) => verificarSelecciones(event)}>
+			<select id="integrante-movimientos" bind:value={$integrante.movimientos} multiple required on:change={(event) => verificarCantidadMovimientos(event)}>
 				<option value="" disabled>Selecciona entre 1 y 4 movimientos:</option>
 				{#each filteredMovimientos as movimiento} 
 					<option value={movimiento.id}>{movimiento.nombre}</option>
