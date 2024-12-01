@@ -220,6 +220,7 @@
 		border-radius: 12px; /* Bordes redondeados */
 		padding: 10px 20px; /* Espaciado interno */
 		margin-right: 5px;
+		cursor: pointer;
 	}
 
 	.boton.eliminar:hover {
