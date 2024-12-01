@@ -32,6 +32,30 @@
 			)
 		: data.movimientos;
 
+	async function nuevoIntegrante() {
+		const currentIntegrante = $integrante;
+		console.log(currentIntegrante);
+		const integranteUpdate = {
+			id_integrante: currentIntegrante.id,
+			nombre: currentIntegrante.nombre,
+			id_pokemon: currentIntegrante.pokemon.id,
+			id_naturaleza: currentIntegrante.naturaleza.id,
+			movimientos: currentIntegrante.movimientos.filter((id) => id !== null && id !== undefined)
+		};
+		const response = await fetch(`http://localhost:8000/teams/${data.team.id}`, {
+			method: 'POST',
+			headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+			body: JSON.stringify(integranteUpdate)
+		});
+		if (response.ok) {
+			alert('Integrante actualizado correctamente');
+			location.reload();
+		} else {
+			alert('Error al actualizar el integrante');
+			location.reload();
+		}
+	}
+
 	async function guardarIntegrante() {
 		const currentIntegrante = $integrante;
 		console.log(currentIntegrante);
@@ -90,6 +114,7 @@
 	<main>
 		<p class="team-generacion">Generacion: {data.team.generacion}</p>
 		<h2>Integrantes</h2>
+		<button class="boton nuevo">Agregar integrante</button>
 		<div class="presentacion">
 			{#each data.team.integrantes as integrante}
 				<div class="integrante">
@@ -114,6 +139,9 @@
 							-
 						{/if}
 					</p>
+
+					<p>Estadisticas:</p>
+
 					<div class="form-edit">
 						<button type="submit" class="boton editar" on:click={() => editarIntegrante(integrante)}
 							>Editar integrante</button
@@ -232,6 +260,10 @@
 	}
 	.boton.editar:hover {
 		background-color: rgb(53, 24, 214);
+		color: white;
+	}
+	.boton.nuevo:hover {
+		background-color: green;
 		color: white;
 	}
 
