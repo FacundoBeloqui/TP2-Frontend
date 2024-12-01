@@ -195,7 +195,7 @@
 		padding: 1.5rem;
 
 		.integrante {
-			border: 4px solid red;
+			border: 4px solid brown;
 			border-radius: 5px;
 			width: 300px;
 			padding: 1.5rem;
@@ -253,7 +253,7 @@
 		margin: 5rem auto;
 		display: flex;
 		flex-direction: column;
-		border: 2px solid red;
+		border: 2px solid brown;
 		border-radius: 5px;
 		padding: 20px;
 		width: 300px;
