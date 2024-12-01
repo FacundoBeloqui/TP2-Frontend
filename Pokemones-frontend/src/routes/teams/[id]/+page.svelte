@@ -47,11 +47,12 @@
 			headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
 			body: JSON.stringify(integranteUpdate)
 		});
-
 		if (response.ok) {
 			alert('Integrante actualizado correctamente');
+			location.reload();
 		} else {
 			alert('Error al actualizar el integrante');
+			location.reload();
 		}
 	}
 
@@ -72,11 +73,14 @@
 			method: 'DELETE',
 			headers: { 'Content-Type': 'application/json', Accept: 'application/json' }
 		});
+		location.reload();
 
 		if (response.ok) {
 			alert('Integrante eliminado correctamente');
+			location.reload();
 		} else {
 			alert('Error al eliminar el integrante');
+			location.reload();
 		}
 	}
 </script>
