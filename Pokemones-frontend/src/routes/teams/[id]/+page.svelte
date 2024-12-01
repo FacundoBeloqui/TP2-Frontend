@@ -40,7 +40,7 @@
 			nombre: currentIntegrante.nombre,
 			id_pokemon: currentIntegrante.pokemon.id,
 			id_naturaleza: currentIntegrante.naturaleza.id,
-			movimientos: currentIntegrante.movimientos.filter((id) => id !== null && id !== undefined) // Asegúrate de que sea un array de IDs
+			movimientos: currentIntegrante.movimientos.filter((id) => id !== null && id !== undefined)
 		};
 		const response = await fetch(`http://localhost:8000/teams/${data.team.id}`, {
 			method: 'PUT',
@@ -214,22 +214,22 @@
 	.boton {
 		display: inline-block;
 		align-items: center;
-		background-color: #e6dddd; /* Color de fondo blanco */
-		color: black; /* Color del texto */
-		border: 2px solid rgb(151, 134, 134); /* Sin borde */
-		border-radius: 12px; /* Bordes redondeados */
-		padding: 10px 20px; /* Espaciado interno */
+		background-color: #e6dddd;
+		color: black;
+		border: 2px solid rgb(151, 134, 134);
+		border-radius: 12px;
+		padding: 10px 20px;
 		margin-right: 5px;
 		cursor: pointer;
 	}
 
 	.boton.eliminar:hover {
-		background-color: red; /* Color de fondo rojo al pasar el mouse */
-		color: white; /* Cambia el color del texto a blanco */
+		background-color: red;
+		color: white;
 	}
 	.boton.editar:hover {
-		background-color: rgb(53, 24, 214); /* Color de fondo rojo al pasar el mouse */
-		color: white; /* Cambia el color del texto a blanco */
+		background-color: rgb(53, 24, 214);
+		color: white;
 	}
 
 	a {
