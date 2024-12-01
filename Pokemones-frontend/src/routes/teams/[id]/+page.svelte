@@ -34,20 +34,18 @@
 
 	async function guardarIntegrante() {
 		const currentIntegrante = $integrante;
-
 		console.log(currentIntegrante);
-
-		// const integranteUpdate = {
-		// 	nombre: currentIntegrante.nombre,
-		// 	id_pokemon: currentIntegrante.pokemon.id,
-		// 	id_naturaleza: currentIntegrante.naturaleza.id,
-		// 	movimientos: currentIntegrante.movimientos.map(mov => mov.id) // Asegúrate de que sea un array de IDs
-		// };
-
-		const response = await fetch(`/teams/${data.team.id}/`, {
+		const integranteUpdate = {
+			id_integrante: currentIntegrante.id,
+			nombre: currentIntegrante.nombre,
+			id_pokemon: currentIntegrante.pokemon.id,
+			id_naturaleza: currentIntegrante.naturaleza.id,
+			movimientos: currentIntegrante.movimientos.filter((id) => id !== null && id !== undefined) // Asegúrate de que sea un array de IDs
+		};
+		const response = await fetch(`http://localhost:8000/teams/${data.team.id}`, {
 			method: 'POST',
-			headers: { 'Content-Type': 'application/json' },
-			body: JSON.stringify(currentIntegrante)
+			headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+			body: JSON.stringify(integranteUpdate)
 		});
 
 		if (response.ok) {
@@ -111,27 +109,15 @@
 	</main>
 {/if}
 {#if $integrante.id !== null}
-	<form class="form-update" method="POST" action="?/update">
+	<form class="form-update" on:submit={guardarIntegrante}>
 		<p>Editar Integrante</p>
-		<input type="hidden" name="id_integrante" value={$integrante.id} />
 		<div class="form-info">
 			<label for="integrante-nombre">Nombre:</label>
-			<input
-				type="text"
-				id="integrante-nombre"
-				name="nombre"
-				bind:value={$integrante.nombre}
-				required
-			/>
+			<input type="text" id="integrante-nombre" bind:value={$integrante.nombre} required />
 		</div>
 		<div class="form-info">
 			<label for="integrante-pokemon">Pokemon:</label>
-			<select
-				id="integrante-pokemon"
-				name="id_pokemon"
-				bind:value={$integrante.pokemon.id}
-				required
-			>
+			<select id="integrante-pokemon" bind:value={$integrante.pokemon.id}>
 				<option value="" disabled>Selecciona un pokemon</option>
 				{#each filteredPokemones as pokemon}
 					<option value={pokemon.id}>{pokemon.identificador}</option>
@@ -140,12 +126,7 @@
 		</div>
 		<div class="form-info">
 			<label for="integrante-naturaleza">Naturaleza:</label>
-			<select
-				id="integrante-naturaleza"
-				name="id_naturaleza"
-				bind:value={$integrante.naturaleza.id}
-				required
-			>
+			<select id="integrante-naturaleza" bind:value={$integrante.naturaleza.id}>
 				<option value="" disabled>Selecciona una naturaleza</option>
 				{#each data.naturalezas as naturaleza}
 					<option value={naturaleza.id}>{naturaleza.nombre}</option>
@@ -156,7 +137,6 @@
 			<label for="integrante-movimientos">Movimientos:</label>
 			<select
 				id="integrante-movimientos"
-				name="movimientos"
 				bind:value={$integrante.movimientos}
 				multiple
 				required
@@ -168,7 +148,9 @@
 				{/each}
 			</select>
 		</div>
-		<div class="form-submit"><button type="submit">Guardar integrante</button></div>
+		<div class="form-submit">
+			<button type="submit">Guardar integrante</button>
+		</div>
 	</form>
 {/if}
 
