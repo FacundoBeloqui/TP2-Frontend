@@ -40,7 +40,7 @@
 			nombre: currentIntegrante.nombre,
 			id_pokemon: currentIntegrante.pokemon.id,
 			id_naturaleza: currentIntegrante.naturaleza.id,
-			movimientos: currentIntegrante.movimientos.filter((id) => id !== null && id !== undefined)
+			movimientos: currentIntegrante.movimientos.filter((id) => id !== null && id !== undefined) // Asegúrate de que sea un array de IDs
 		};
 		const response = await fetch(`http://localhost:8000/teams/${data.team.id}`, {
 			method: 'POST',
