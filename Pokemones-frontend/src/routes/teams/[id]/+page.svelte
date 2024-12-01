@@ -16,29 +16,36 @@
 
 	let selectedGeneration = null;
 
-	$ : selectedGeneration = data.team ? data.team.generacion : null;
+	$: selectedGeneration = data.team ? data.team.generacion : null;
 
-	$: filteredPokemones = selectedGeneration ? data.pokemones.filter(pokemon => Array.isArray(pokemon.generacion) && pokemon.generacion.includes(parseInt(selectedGeneration))) : data.pokemones;
+	$: filteredPokemones = selectedGeneration
+		? data.pokemones.filter(
+				(pokemon) =>
+					Array.isArray(pokemon.generacion) &&
+					pokemon.generacion.includes(parseInt(selectedGeneration))
+			)
+		: data.pokemones;
 
-	$: filteredMovimientos = selectedGeneration ? data.movimientos.filter(movimiento => movimiento.generacion === parseInt(selectedGeneration)) : data.movimientos;
-
+	$: filteredMovimientos = selectedGeneration
+		? data.movimientos.filter(
+				(movimiento) => movimiento.generacion === parseInt(selectedGeneration)
+			)
+		: data.movimientos;
 
 	async function guardarIntegrante() {
 		const currentIntegrante = $integrante;
-
-		console.log(currentIntegrante)
-
-		// const integranteUpdate = {
-		// 	nombre: currentIntegrante.nombre,
-		// 	id_pokemon: currentIntegrante.pokemon.id,
-		// 	id_naturaleza: currentIntegrante.naturaleza.id,
-		// 	movimientos: currentIntegrante.movimientos.map(mov => mov.id) // Asegúrate de que sea un array de IDs
-		// };
-
-		const response = await fetch(`/teams/${data.team.id}/${currentIntegrante.id}`, {
-		method: 'PUT',
-		headers: { 'Content-Type': 'application/json' },
-		body: JSON.stringify(currentIntegrante)
+		console.log(currentIntegrante);
+		const integranteUpdate = {
+			id_integrante: currentIntegrante.id,
+			nombre: currentIntegrante.nombre,
+			id_pokemon: currentIntegrante.pokemon.id,
+			id_naturaleza: currentIntegrante.naturaleza.id,
+			movimientos: currentIntegrante.movimientos.filter((id) => id !== null && id !== undefined) // Asegúrate de que sea un array de IDs
+		};
+		const response = await fetch(`http://localhost:8000/teams/${data.team.id}`, {
+			method: 'POST',
+			headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+			body: JSON.stringify(integranteUpdate)
 		});
 
 		if (response.ok) {
@@ -48,9 +55,9 @@
 		}
 	}
 
-	function eliminarIntegrante(integranteEliminado) {
-		return data.team.integrantes.filter((i) => i.id !== integrante.id)
-	}
+	// function eliminarIntegrante(integranteEliminado) {
+	// 	// return data.team.integrantes.filter((i) => i.id !== integrante.id)
+	// }
 
 	let errorMessage = "";
 
@@ -58,12 +65,11 @@
 		const movimientosSeleccionados = event.target.selectedOptions;
 
 		if (movimientosSeleccionados.length > 4) {
-			errorMessage = "No puedes elegir mas de 4 movimientos"
+			errorMessage = 'No puedes elegir mas de 4 movimientos';
 		} else {
-			errorMessage = "";
+			errorMessage = '';
 		}
 	}
-
 </script>
 
 <h1>Equipo {data.team.nombre}</h1>
@@ -86,28 +92,27 @@
 					</p>
 					<p>
 						Movimientos:
-						{#if data.team.movimientos}
+						{#if integrante.movimientos}
 							{#each integrante.movimientos as movimiento}
 								<a href="/movimientos/{movimiento.id}" class="movs">
 									- {movimiento.nombre}
 								</a>
 							{/each}
 						{:else}
-								-
+							-
 						{/if}
 					</p>
 					<div class="form-edit">
 						<button type="button" on:click={() => editarIntegrante(integrante)}>Editar integrante</button>
-						<button type="button" on:click={() => eliminarIntegrante(integrante)}>Eliminar integrante</button>
+						<!-- <button type="button" on:submit={eliminarIntegrante}>Eliminar integrante</button> -->
 					</div>
 				</div>
 			{/each}
 		</div>
 	</main>
 {/if}
-
 {#if $integrante.id !== null}
-	<form class="form-update" method="PUT" action="?/update" on:submit={guardarIntegrante}>
+	<form class="form-update" on:submit={guardarIntegrante}>
 		<p>Editar Integrante</p>
 		<div class="form-info">
 			<label for="integrante-nombre">Nombre:</label>
@@ -133,9 +138,15 @@
 		</div>
 		<div class="form-info">
 			<label for="integrante-movimientos">Movimientos:</label>
-			<select id="integrante-movimientos" bind:value={$integrante.movimientos} multiple required on:change={(event) => verificarCantidadMovimientos(event)}>
+			<select
+				id="integrante-movimientos"
+				bind:value={$integrante.movimientos}
+				multiple
+				required
+				on:change={(event) => verificarCantidadMovimientos(event)}
+			>
 				<option value="" disabled>Selecciona entre 1 y 4 movimientos:</option>
-				{#each filteredMovimientos as movimiento} 
+				{#each filteredMovimientos as movimiento}
 					<option value={movimiento.id}>{movimiento.nombre}</option>
 				{/each}
 			</select>
@@ -156,7 +167,7 @@
 		text-transform: capitalize;
 		font-size: 2.5rem;
 		color: #000;
-		margin: 4rem .5rem .5rem 2rem;
+		margin: 4rem 0.5rem 0.5rem 2rem;
 	}
 
 	.presentacion {
@@ -189,14 +200,14 @@
 
 	a {
 		color: black;
-		margin-top: .5rem;
+		margin-top: 0.5rem;
 	}
 
 	.team-generacion {
 		text-align: left;
 		font-size: 1.5rem;
 		border-bottom: 2px solid black;
-		padding-bottom: .5rem;
+		padding-bottom: 0.5rem;
 	}
 
 	.movs {
