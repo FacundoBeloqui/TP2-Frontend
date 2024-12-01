@@ -37,15 +37,15 @@
 		});
 	}
 
-	let errorMessage = "";
+	let errorMessage = '';
 
 	function verificarCantidadMovimientos(event) {
 		const movimientosSeleccionados = event.target.selectedOptions;
 
 		if (movimientosSeleccionados.length > 4) {
-			errorMessage = "No puedes elegir mas de 4 movimientos"
+			errorMessage = 'No puedes elegir mas de 4 movimientos';
 		} else {
-			errorMessage = "";
+			errorMessage = '';
 		}
 	}
 </script>
@@ -66,10 +66,11 @@
 			{#if equipo.nombre != 'string'}
 				<tr class={equipo.id % 2 == 0 ? 'zero' : 'one'}>
 					<td>{equipo.id}</td>
-					<td><a href="/equipos/{equipo.id}">{equipo.nombre}</a></td>
+					<td><a href="/teams/{equipo.id}">{equipo.nombre}</a></td>
 					<td>{equipo.generacion}</td>
 					<td>
-						<button class="info-integrante"><a href="/equipos/{equipo.id}">Ver integrantes</a></button>
+						<button class="info-integrante"><a href="/teams/{equipo.id}">Ver integrantes</a></button
+						>
 					</td>
 				</tr>
 			{/if}
@@ -110,12 +111,7 @@
 			<fieldset>
 				<div>
 					<label for="integrante-nombre">Nombre:</label>
-					<input
-						type="text"
-						id="integrante-nombre"
-						bind:value={integrante.nombre}
-						required
-					/>
+					<input type="text" id="integrante-nombre" bind:value={integrante.nombre} required />
 				</div>
 				<div>
 					<label for="integrante-pokemon">Pokemon:</label>
@@ -149,7 +145,7 @@
 							<option value={movimiento.id}>{movimiento.nombre}</option>
 						{/each}
 					</select>
-					{#if errorMessage} 
+					{#if errorMessage}
 						<div class="error-message">
 							{errorMessage}
 						</div>
@@ -174,7 +170,7 @@
 	}
 
 	.info-integrante {
-		margin: .5rem;
+		margin: 0.5rem;
 	}
 
 	h2 {
