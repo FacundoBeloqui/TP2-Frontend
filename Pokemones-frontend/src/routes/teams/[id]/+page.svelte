@@ -66,6 +66,19 @@
 			errorMessage = '';
 		}
 	}
+
+	async function eliminarIntegrante(integrante) {
+		const response = await fetch(`http://localhost:8000/teams/${data.team.id}/${integrante.id}`, {
+			method: 'DELETE',
+			headers: { 'Content-Type': 'application/json', Accept: 'application/json' }
+		});
+
+		if (response.ok) {
+			alert('Integrante eliminado correctamente');
+		} else {
+			alert('Error al eliminar el integrante');
+		}
+	}
 </script>
 
 <h1>Equipo {data.team.nombre}</h1>
@@ -101,6 +114,9 @@
 					<div class="form-edit">
 						<button type="button" on:click={() => editarIntegrante(integrante)}
 							>Editar integrante</button
+						>
+						<button type="button" on:click={() => eliminarIntegrante(integrante)}
+							>Eliminar integrante</button
 						>
 					</div>
 				</div>
