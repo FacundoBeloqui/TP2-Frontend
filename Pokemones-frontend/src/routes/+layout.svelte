@@ -13,7 +13,6 @@
 	<Footer />
 </div>
 
-
 <style>
 	.app {
 		min-height: 100dvh;
