@@ -143,7 +143,7 @@
 	th,
 	td {
 		padding: 0.8rem;
-		border-bottom: 1px solid #ddd;
+		border-bottom: 1px solid #0f0e0e;
 	}
 
 	th {
@@ -184,9 +184,9 @@
 	}
 
 	.volver-link {
-		background-color: white;
+		background-color: #ddd2d2;
 		color: black;
-		border: 2px solid #04aa6d;
+		border: 2px solid #212221;
 	}
 
 	.volver-link:hover {

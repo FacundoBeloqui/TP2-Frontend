@@ -25,7 +25,7 @@ export async function load({ params }) {
 
 	let movimientos = await responseMovimientos.json();
 
-	let urlNaturalezas = new URL('http://localhost:8000/teams/nature/');
+	let urlNaturalezas = new URL('http://localhost:8000/naturalezas/');
 	const responseNaturalezas = await fetch(urlNaturalezas);
 	if (!responseNaturalezas.ok) {
 		throw new Error(`Response status: ${responseNaturalezas.status}`);
