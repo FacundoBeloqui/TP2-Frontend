@@ -73,7 +73,6 @@
 			method: 'DELETE',
 			headers: { 'Content-Type': 'application/json', Accept: 'application/json' }
 		});
-		location.reload();
 
 		if (response.ok) {
 			alert('Integrante eliminado correctamente');
