@@ -112,11 +112,13 @@
 						{/if}
 					</p>
 					<div class="form-edit">
-						<button type="button" on:click={() => editarIntegrante(integrante)}
+						<button type="submit" class="boton editar" on:click={() => editarIntegrante(integrante)}
 							>Editar integrante</button
 						>
-						<button type="button" on:click={() => eliminarIntegrante(integrante)}
-							>Eliminar integrante</button
+						<button
+							type="button"
+							class="boton eliminar"
+							on:click={() => eliminarIntegrante(integrante)}>Eliminar integrante</button
 						>
 					</div>
 				</div>
@@ -193,7 +195,7 @@
 		padding: 1.5rem;
 
 		.integrante {
-			border: 2px solid red;
+			border: 4px solid red;
 			border-radius: 5px;
 			width: 300px;
 			padding: 1.5rem;
@@ -203,11 +205,30 @@
 		.form-edit {
 			margin: 2rem auto 0 auto;
 			display: flex;
-			flex-direction: column;
 			justify-content: center;
 			border-style: none;
 			align-items: center;
 		}
+	}
+
+	.boton {
+		display: inline-block;
+		align-items: center;
+		background-color: #e6dddd; /* Color de fondo blanco */
+		color: black; /* Color del texto */
+		border: 2px solid rgb(151, 134, 134); /* Sin borde */
+		border-radius: 12px; /* Bordes redondeados */
+		padding: 10px 20px; /* Espaciado interno */
+		margin-right: 5px;
+	}
+
+	.boton.eliminar:hover {
+		background-color: red; /* Color de fondo rojo al pasar el mouse */
+		color: white; /* Cambia el color del texto a blanco */
+	}
+	.boton.editar:hover {
+		background-color: rgb(53, 24, 214); /* Color de fondo rojo al pasar el mouse */
+		color: white; /* Cambia el color del texto a blanco */
 	}
 
 	a {
