@@ -37,6 +37,20 @@
 		});
 	}
 
+	async function eliminarEquipo(team) {
+		console.log(team)
+		const response = await fetch(`/teams/${team.id}`, {
+			method: 'DELETE',
+			headers: { 'Content-Type': 'application/json' }
+		})
+
+		if (response.ok) {
+			alert('Integrante actualizado correctamente');
+		} else {
+			alert('Error al actualizar el integrante');
+		}
+	}
+
 	let errorMessage = "";
 
 	function verificarCantidadMovimientos(event) {
@@ -70,6 +84,7 @@
 					<td>{equipo.generacion}</td>
 					<td>
 						<button class="info-integrante"><a href="/equipos/{equipo.id}">Ver integrantes</a></button>
+						<button type="button" on:click={() => eliminarEquipo(equipo)}>Eliminar equipo</button>
 					</td>
 				</tr>
 			{/if}

@@ -48,6 +48,10 @@
 		}
 	}
 
+	function eliminarIntegrante(integranteEliminado) {
+		return data.team.integrantes.filter((i) => i.id !== integrante.id)
+	}
+
 	let errorMessage = "";
 
 	function verificarCantidadMovimientos(event) {
@@ -94,6 +98,7 @@
 					</p>
 					<div class="form-edit">
 						<button type="button" on:click={() => editarIntegrante(integrante)}>Editar integrante</button>
+						<button type="button" on:click={() => eliminarIntegrante(integrante)}>Eliminar integrante</button>
 					</div>
 				</div>
 			{/each}
@@ -174,8 +179,9 @@
 		.form-edit {
 			margin: 2rem auto 0 auto;
 			display: flex;
-			flex-direction: column;
+			flex-direction: row;
 			justify-content: center;
+			gap: .5rem;
 			border-style: none;
 			align-items: center;
 		}
