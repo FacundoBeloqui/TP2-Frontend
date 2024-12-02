@@ -74,6 +74,7 @@
 		background-color: white;
 	}
 	td {
-		font-size: 20px;
+		font-size: 25px;
+		padding: 20px;
 	}
 </style>

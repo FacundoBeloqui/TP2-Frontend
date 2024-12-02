@@ -52,6 +52,12 @@ export const actions = {
 
 		console.log(payload)
 
+		const cantidadMovimientos = integrantes.some(integrante => integrante.movimientos.length > 4);
+		if (cantidadMovimientos) {
+			console.log("No se puede")
+			return 
+		}
+
 		let url = new URL('http://localhost:8000/teams/');
 		const response = await fetch(url, {
 			method: 'POST',
