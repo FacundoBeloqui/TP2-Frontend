@@ -23,7 +23,7 @@ export async function load() {
 
 	let movimientos = await responseMovimientos.json();
 
-	let urlNaturalezas = new URL('http://localhost:8000/teams/nature/');
+	let urlNaturalezas = new URL('http://localhost:8000/naturalezas/');
 	const responseNaturalezas = await fetch(urlNaturalezas);
 	if (!responseNaturalezas.ok) {
 		throw new Error(`Response status: ${responseNaturalezas.status}`);
@@ -52,6 +52,12 @@ export const actions = {
 
 		console.log(payload)
 
+		const cantidadMovimientos = integrantes.some(integrante => integrante.movimientos.length > 4);
+		if (cantidadMovimientos) {
+			console.log("No se puede")
+			return 
+		}
+
 		let url = new URL('http://localhost:8000/teams/');
 		const response = await fetch(url, {
 			method: 'POST',
@@ -67,28 +73,5 @@ export const actions = {
 			success: true,
 			message: 'Equipo creado exitosamente'
 		};
-	},
-
-	// delete: async ({request}) => {
-	// 	const data = await request.formData();
-
-	// 	let url = new URL(`http://localhost:8000/teams/${team_id}`)
-	// 	let params = {id = data.get("id")}
-	// 	url.search = new URLSearchParams(params).toString()
-
-	// 	const response = await fetch(url, {
-	// 		method: 'DELETE',
-	// 		headers: { 'Content-Type': 'application/json' },
-	// 	})
-
-	// 	if (!response.ok) {
-	// 		throw new Error(`Error al eliminar integrante. Status: ${response.status}`);
-	// 	}
-	
-	// 	return {
-	// 		success: true,
-	// 		message: 'Integrante eliminado exitosamente'
-	// 	};
-
-	// }
+	}
 };

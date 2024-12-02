@@ -26,5 +26,6 @@
 		margin: 0 auto;
 		width: 100%;
 		overflow-x: scroll;
+		background-color: #ddd2d2;
 	}
 </style>

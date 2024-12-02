@@ -30,7 +30,27 @@
 			)
 		: data.movimientos;
 
+
+
+	let errorMessage = "";
+
+	function verificarCantidadMovimientos(event) {
+		const movimientosSeleccionados = event.target.selectedOptions;
+
+		if (movimientosSeleccionados.length > 4) {
+			errorMessage = 'No puedes elegir mas de 4 movimientos';
+		} else {
+			errorMessage = '';
+		}
+	}
+
 	function agregarIntegrante() {
+		const cantidadMovimientos = $equipo.integrantes.some(integrante => integrante.movimientos.length > 4);
+
+		if (cantidadMovimientos) {
+			errorMessage = 'Un integrante no puede tener más de 4 movimientos';
+			return;
+		}
 		equipo.update((e) => {
 			e.integrantes.push({ nombre: '', id_pokemon: null, id_naturaleza: null, movimientos: [] });
 			return e;
@@ -38,8 +58,6 @@
 	}
 
 	async function eliminarEquipo(team) {
-		// const currentTeam = $equipo
-		// console.log(currentTeam)
 		console.log(team)
 		const response = await fetch(`http://localhost:8000/teams/${team.id}`, {
 			method: 'DELETE',
@@ -51,18 +69,6 @@
 			data.equipos = data.equipos.filter(e => e.id !== team.id);
 		} else {
 			alert('Error al eliminar el equipo');
-		}
-	}
-
-	let errorMessage = "";
-
-	function verificarCantidadMovimientos(event) {
-		const movimientosSeleccionados = event.target.selectedOptions;
-
-		if (movimientosSeleccionados.length > 4) {
-			errorMessage = 'No puedes elegir mas de 4 movimientos';
-		} else {
-			errorMessage = '';
 		}
 	}
 </script>
@@ -148,9 +154,9 @@
 						{/each}
 					</select>
 				</div>
-				<div>
+				<div class="movimiento-select">
 					<label for="integrante-movimientos">Movimientos:</label>
-					<!-- <select
+					<select
 						id="integrante-movimientos"
 						bind:value={integrante.movimientos}
 						multiple
@@ -161,18 +167,7 @@
 						{#each filteredMovimientos as movimiento}
 							<option value={movimiento.id}>{movimiento.nombre}</option>
 						{/each}
-					</select> -->
-					<div class="movimientos-checkboxes">
-						{#each filteredMovimientos as movimiento}
-						  <div>
-							<label>
-							  <input type="checkbox" bind:group={integrante.movimientos} value={movimiento.id}
-								on:change={(event) => verificarCantidadMovimientos(event)}/>
-								{movimiento.nombre}
-							</label>
-						  </div>
-						{/each}
-					  </div>
+					</select>
 					{#if errorMessage}
 						<div class="error-message">
 							{errorMessage}
@@ -199,31 +194,6 @@
 
 	.info-integrante {
 		margin: 0.5rem;
-	}
-
-	.movimientos-checkboxes {
-		max-height: 200px; 
-		overflow-y: auto; 
-		display: flex;
-		flex-wrap: wrap;
-		gap: 10px; 
-	}
-
-	.movimientos-checkboxes label {
-		display: flex;
-		align-items: center;
-		gap: 5px; /* Espacio entre el checkbox y el texto */
-		margin-bottom: 5px;
-	}
-/* 
-	.movimientos-checkboxes input[type="checkbox"] {
-  		transform: scale(0.8); 
-	} */
-	/* Reduce el tamaño del checkbox */
-
-	.movimientos-checkboxes > div {
-  		width: 100px; /* Limita el ancho de cada checkbox */
- 		margin-bottom: 5px;
 	}
 
 	h2 {
@@ -275,6 +245,10 @@
 			align-self: center;
 		}
 
+		select {
+			margin-bottom: 1rem;
+		}
+
 		.form-submit {
 			padding: 2rem 2rem 0 2rem;
 			display: flex;
@@ -285,12 +259,10 @@
 		.error-message {
 			color: red;
 			font-weight: bold;
-			position: absolute;
-			top: 20px;
-			right: 20px;
-			background-color: rgba(255, 0, 0, 0.2);
-			padding: 10px;
+			position: relative;
 			border-radius: 5px;
+			width: 200px;
+			font-size: 10px;
 		}
 	}
 </style>

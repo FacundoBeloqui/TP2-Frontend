@@ -40,24 +40,21 @@
 			nombre: currentIntegrante.nombre,
 			id_pokemon: currentIntegrante.pokemon.id,
 			id_naturaleza: currentIntegrante.naturaleza.id,
-			movimientos: currentIntegrante.movimientos.filter((id) => id !== null && id !== undefined) // Asegúrate de que sea un array de IDs
+			movimientos: currentIntegrante.movimientos.filter((id) => id !== null && id !== undefined)
 		};
 		const response = await fetch(`http://localhost:8000/teams/${data.team.id}`, {
-			method: 'POST',
+			method: 'PUT',
 			headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
 			body: JSON.stringify(integranteUpdate)
 		});
-
 		if (response.ok) {
 			alert('Integrante actualizado correctamente');
+			location.reload();
 		} else {
 			alert('Error al actualizar el integrante');
+			location.reload();
 		}
 	}
-
-	// function eliminarIntegrante(integranteEliminado) {
-	// 	// return data.team.integrantes.filter((i) => i.id !== integrante.id)
-	// }
 
 	let errorMessage = "";
 
@@ -68,6 +65,21 @@
 			errorMessage = 'No puedes elegir mas de 4 movimientos';
 		} else {
 			errorMessage = '';
+		}
+	}
+
+	async function eliminarIntegrante(integrante) {
+		const response = await fetch(`http://localhost:8000/teams/${data.team.id}/${integrante.id}`, {
+			method: 'DELETE',
+			headers: { 'Content-Type': 'application/json', Accept: 'application/json' }
+		});
+
+		if (response.ok) {
+			alert('Integrante eliminado correctamente');
+			location.reload();
+		} else {
+			alert('Error al eliminar el integrante');
+			location.reload();
 		}
 	}
 </script>
@@ -103,8 +115,14 @@
 						{/if}
 					</p>
 					<div class="form-edit">
-						<button type="button" on:click={() => editarIntegrante(integrante)}>Editar integrante</button>
-						<!-- <button type="button" on:submit={eliminarIntegrante}>Eliminar integrante</button> -->
+						<button type="submit" class="boton editar" on:click={() => editarIntegrante(integrante)}
+							>Editar integrante</button
+						>
+						<button
+							type="button"
+							class="boton eliminar"
+							on:click={() => eliminarIntegrante(integrante)}>Eliminar integrante</button
+						>
 					</div>
 				</div>
 			{/each}
@@ -180,7 +198,7 @@
 		padding: 1.5rem;
 
 		.integrante {
-			border: 2px solid red;
+			border: 4px solid brown;
 			border-radius: 5px;
 			width: 300px;
 			padding: 1.5rem;
@@ -196,6 +214,27 @@
 			border-style: none;
 			align-items: center;
 		}
+	}
+
+	.boton {
+		display: inline-block;
+		align-items: center;
+		background-color: #e6dddd;
+		color: black;
+		border: 2px solid rgb(151, 134, 134);
+		border-radius: 12px;
+		padding: 10px 20px;
+		margin-right: 5px;
+		cursor: pointer;
+	}
+
+	.boton.eliminar:hover {
+		background-color: red;
+		color: white;
+	}
+	.boton.editar:hover {
+		background-color: rgb(53, 24, 214);
+		color: white;
 	}
 
 	a {
@@ -220,7 +259,7 @@
 		margin: 5rem auto;
 		display: flex;
 		flex-direction: column;
-		border: 2px solid red;
+		border: 2px solid brown;
 		border-radius: 5px;
 		padding: 20px;
 		width: 300px;

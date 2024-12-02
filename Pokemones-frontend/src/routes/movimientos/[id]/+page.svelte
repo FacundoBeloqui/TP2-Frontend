@@ -69,7 +69,7 @@
 		border: 1px solid #ddd;
 		border-radius: 8px;
 		width: 80%;
-		box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
+		box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.397);
 	}
 
 	p {
@@ -109,15 +109,16 @@
 	}
 
 	.volver-link {
-		background-color: white;
+		background-color: #ddd2d2;
 		color: black;
-		border: 2px solid #04aa6d;
+		border: 2px solid #212221;
 	}
 
 	.volver-link:hover {
 		background-color: #04aa6d;
 		color: white;
 	}
+
 	a {
 		color: inherit;
 		text-decoration: none;
