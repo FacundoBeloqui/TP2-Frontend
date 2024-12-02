@@ -30,14 +30,9 @@
 			)
 		: data.movimientos;
 
-	function agregarIntegrante() {
-		equipo.update((e) => {
-			e.integrantes.push({ nombre: '', id_pokemon: null, id_naturaleza: null, movimientos: [] });
-			return e;
-		});
-	}
 
-	let errorMessage = '';
+
+	let errorMessage = "";
 
 	function verificarCantidadMovimientos(event) {
 		const movimientosSeleccionados = event.target.selectedOptions;
@@ -46,6 +41,34 @@
 			errorMessage = 'No puedes elegir mas de 4 movimientos';
 		} else {
 			errorMessage = '';
+		}
+	}
+
+	function agregarIntegrante() {
+		const cantidadMovimientos = $equipo.integrantes.some(integrante => integrante.movimientos.length > 4);
+
+		if (cantidadMovimientos) {
+			errorMessage = 'Un integrante no puede tener más de 4 movimientos';
+			return;
+		}
+		equipo.update((e) => {
+			e.integrantes.push({ nombre: '', id_pokemon: null, id_naturaleza: null, movimientos: [] });
+			return e;
+		});
+	}
+
+	async function eliminarEquipo(team) {
+		console.log(team)
+		const response = await fetch(`http://localhost:8000/teams/${team.id}`, {
+			method: 'DELETE',
+			headers: { 'Content-Type': 'application/json' }
+		})
+
+		if (response.ok) {
+			alert('Equipo eliminado correctamente');
+			data.equipos = data.equipos.filter(e => e.id !== team.id);
+		} else {
+			alert('Error al eliminar el equipo');
 		}
 	}
 </script>
@@ -69,8 +92,8 @@
 					<td><a href="/teams/{equipo.id}">{equipo.nombre}</a></td>
 					<td>{equipo.generacion}</td>
 					<td>
-						<button class="info-integrante"><a href="/teams/{equipo.id}">Ver integrantes</a></button
-						>
+						<button type="button"><a href="/teams/{equipo.id}">Ver integrantes</a></button>
+						<button type="button" on:click={() => eliminarEquipo(equipo)}>Eliminar equipo</button>
 					</td>
 				</tr>
 			{/if}
@@ -131,7 +154,7 @@
 						{/each}
 					</select>
 				</div>
-				<div>
+				<div class="movimiento-select">
 					<label for="integrante-movimientos">Movimientos:</label>
 					<select
 						id="integrante-movimientos"
@@ -222,6 +245,10 @@
 			align-self: center;
 		}
 
+		select {
+			margin-bottom: 1rem;
+		}
+
 		.form-submit {
 			padding: 2rem 2rem 0 2rem;
 			display: flex;
@@ -232,12 +259,10 @@
 		.error-message {
 			color: red;
 			font-weight: bold;
-			position: absolute;
-			top: 20px;
-			right: 20px;
-			background-color: rgba(255, 0, 0, 0.2);
-			padding: 10px;
+			position: relative;
 			border-radius: 5px;
+			width: 200px;
+			font-size: 10px;
 		}
 	}
 </style>

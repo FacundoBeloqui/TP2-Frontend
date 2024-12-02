@@ -56,7 +56,7 @@
 		}
 	}
 
-	let errorMessage = '';
+	let errorMessage = "";
 
 	function verificarCantidadMovimientos(event) {
 		const movimientosSeleccionados = event.target.selectedOptions;
@@ -208,7 +208,9 @@
 		.form-edit {
 			margin: 2rem auto 0 auto;
 			display: flex;
+			flex-direction: row;
 			justify-content: center;
+			gap: .5rem;
 			border-style: none;
 			align-items: center;
 		}
