@@ -243,10 +243,6 @@
 		background-color: rgb(53, 24, 214);
 		color: white;
 	}
-	/* .boton.nuevo:hover {
-		background-color: green;
-		color: white;
-	} */
 
 	.form-create {
 		display: flex;
