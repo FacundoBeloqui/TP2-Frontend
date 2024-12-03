@@ -41,6 +41,10 @@
 
 	async function nuevoIntegrante(event) {
 		event.preventDefault();
+		if (data.team.integrantes.length > 5) {
+			errorMessage = 'El equipo no puede tener mas de 6 integrantes';
+			return;
+		}
 		const current = $integranteNuevo;
 		console.log(current);
 		const integranteNew = {
