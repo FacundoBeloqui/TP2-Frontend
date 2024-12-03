@@ -96,8 +96,8 @@
 					<td><a href="/teams/{equipo.id}">{equipo.nombre}</a></td>
 					<td>{equipo.generacion}</td>
 					<td>
-						<button type="button"><a href="/teams/{equipo.id}">Ver integrantes</a></button>
-						<button type="button" on:click={() => eliminarEquipo(equipo)}>Eliminar equipo</button>
+						<button type="button" class="boton detalles"><a href="/teams/{equipo.id}">Ver integrantes</a></button>
+						<button type="button" class="boton eliminar" on:click={() => eliminarEquipo(equipo)}>Eliminar equipo</button>
 					</td>
 				</tr>
 			{/if}
@@ -220,6 +220,28 @@
 	}
 	.one {
 		background-color: white;
+	}
+
+
+	.boton {
+		display: inline-block;
+		align-items: center;
+		background-color: #e6dddd;
+		color: black;
+		border: 2px solid rgb(151, 134, 134);
+		border-radius: 12px;
+		padding: 10px 20px;
+		margin-right: 5px;
+		cursor: pointer;
+	}
+
+	.boton.eliminar:hover {
+		background-color: red;
+		color: white;
+	}
+	.boton.detalles:hover {
+		background-color: rgb(53, 24, 214);
+		color: white;
 	}
 
 	.form-create {
