@@ -51,7 +51,7 @@
 			errorMessage = 'Un integrante no puede tener más de 4 movimientos';
 			return;
 		}
-		if ($equipo.integrantes.length > 2) {
+		if ($equipo.integrantes.length > 5) {
 			errorMessage = 'No se puede crear un equipo con mas de 6 integrantes';
 			return;
 		}
