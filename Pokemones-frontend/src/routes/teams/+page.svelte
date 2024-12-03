@@ -196,10 +196,6 @@
 		margin: 4rem 3rem;
 	}
 
-	/* .info-integrante {
-		margin: 0.5rem;
-	} */
-
 	h2 {
 		margin-top: 2rem;
 		text-align: center;
@@ -228,10 +224,10 @@
 		align-items: center;
 		background-color: #e6dddd;
 		color: black;
-		border: 2px solid rgb(151, 134, 134);
+		border: 2px solid black;
 		border-radius: 12px;
 		padding: 10px 20px;
-		margin-right: 5px;
+		margin: .5rem .5rem 5px .5rem;
 		cursor: pointer;
 	}
 

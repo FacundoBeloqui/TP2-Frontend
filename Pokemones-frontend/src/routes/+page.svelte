@@ -60,8 +60,8 @@
 		color: #555;
 	}
 	p:hover {
-		background-color: #f9f9f9; /* Cambiar fondo al pasar el cursor */
-		box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Más sombra */
+		background-color: #f9f9f9;
+		box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
 	}
 	.imagecarousel {
 		position: relative;
