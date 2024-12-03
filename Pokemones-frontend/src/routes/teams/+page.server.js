@@ -55,7 +55,7 @@ export const actions = {
 		const cantidadMovimientos = integrantes.some(integrante => integrante.movimientos.length > 4);
 		if (cantidadMovimientos) {
 			console.log("No se puede")
-			return 
+			return
 		}
 
 		let url = new URL('http://localhost:8000/teams/');

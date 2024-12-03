@@ -30,9 +30,7 @@
 			)
 		: data.movimientos;
 
-
-
-	let errorMessage = "";
+	let errorMessage = '';
 
 	function verificarCantidadMovimientos(event) {
 		const movimientosSeleccionados = event.target.selectedOptions;
@@ -45,10 +43,16 @@
 	}
 
 	function agregarIntegrante() {
-		const cantidadMovimientos = $equipo.integrantes.some(integrante => integrante.movimientos.length > 4);
+		const cantidadMovimientos = $equipo.integrantes.some(
+			(integrante) => integrante.movimientos.length > 4
+		);
 
 		if (cantidadMovimientos) {
 			errorMessage = 'Un integrante no puede tener más de 4 movimientos';
+			return;
+		}
+		if ($equipo.integrantes.length > 2) {
+			errorMessage = 'No se puede crear un equipo con mas de 6 integrantes';
 			return;
 		}
 		equipo.update((e) => {
@@ -58,15 +62,15 @@
 	}
 
 	async function eliminarEquipo(team) {
-		console.log(team)
+		console.log(team);
 		const response = await fetch(`http://localhost:8000/teams/${team.id}`, {
 			method: 'DELETE',
 			headers: { 'Content-Type': 'application/json' }
-		})
+		});
 
 		if (response.ok) {
 			alert('Equipo eliminado correctamente');
-			data.equipos = data.equipos.filter(e => e.id !== team.id);
+			data.equipos = data.equipos.filter((e) => e.id !== team.id);
 		} else {
 			alert('Error al eliminar el equipo');
 		}
@@ -192,9 +196,9 @@
 		margin: 4rem 3rem;
 	}
 
-	.info-integrante {
+	/* .info-integrante {
 		margin: 0.5rem;
-	}
+	} */
 
 	h2 {
 		margin-top: 2rem;

@@ -2,11 +2,18 @@
 	import { writable } from 'svelte/store';
 	export let data;
 
+	let mostrarFormulario = false;
 	let integrante = writable({
 		id: null,
 		nombre: '',
 		pokemon: '',
 		naturaleza: '',
+		movimientos: []
+	});
+	let integranteNuevo = writable({
+		nombre: '',
+		id_pokemon: '',
+		id_naturaleza: '',
 		movimientos: []
 	});
 
@@ -32,7 +39,36 @@
 			)
 		: data.movimientos;
 
-	async function guardarIntegrante() {
+	async function nuevoIntegrante(event) {
+		event.preventDefault();
+		const current = $integranteNuevo;
+		console.log(current);
+		const integranteNew = {
+			nombre: current.nombre,
+			id_pokemon: current.id_pokemon,
+			id_naturaleza: current.id_naturaleza,
+			movimientos: current.movimientos.filter((id) => id !== null && id !== undefined)
+		};
+		if (current.movimientos.length > 4) {
+			errorMessage = 'Un integrante no puede tener más de 4 movimientos';
+			return;
+		}
+		const response = await fetch(`http://localhost:8000/teams/${data.team.id}`, {
+			method: 'POST',
+			headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+			body: JSON.stringify(integranteNew)
+		});
+		if (response.ok) {
+			alert('Integrante agregado correctamente');
+
+			location.reload();
+		} else {
+			alert('Error al agregar el integrante');
+		}
+	}
+
+	async function guardarIntegrante(event) {
+		event.preventDefault();
 		const currentIntegrante = $integrante;
 		console.log(currentIntegrante);
 		const integranteUpdate = {
@@ -42,6 +78,10 @@
 			id_naturaleza: currentIntegrante.naturaleza.id,
 			movimientos: currentIntegrante.movimientos.filter((id) => id !== null && id !== undefined)
 		};
+		if (currentIntegrante.movimientos.length > 4) {
+			errorMessage = 'Un integrante no puede tener más de 4 movimientos';
+			return;
+		}
 		const response = await fetch(`http://localhost:8000/teams/${data.team.id}`, {
 			method: 'PUT',
 			headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
@@ -56,7 +96,7 @@
 		}
 	}
 
-	let errorMessage = "";
+	let errorMessage = '';
 
 	function verificarCantidadMovimientos(event) {
 		const movimientosSeleccionados = event.target.selectedOptions;
@@ -90,6 +130,73 @@
 	<main>
 		<p class="team-generacion">Generacion: {data.team.generacion}</p>
 		<h2>Integrantes</h2>
+		<button
+			class="boton nuevo"
+			on:click={() => {
+				mostrarFormulario = true;
+			}}>Agregar integrante</button
+		>
+		{#if mostrarFormulario}
+			<form class="form-update" on:submit={nuevoIntegrante}>
+				<h3>Nuevo integrante</h3>
+				<div class="integrante-form">
+					<div>
+						<label for="nuevo-integrante-nombre">Nombre:</label>
+						<input
+							type="text"
+							id="nuevo-integrante-nombre"
+							bind:value={$integranteNuevo.nombre}
+							required
+						/>
+					</div>
+					<div>
+						<label for="nuevo-integrante-pokemon">Pokemon:</label>
+						<select id="nuevo-integrante-pokemon" bind:value={$integranteNuevo.id_pokemon} required>
+							<option value="" disabled>Selecciona un pokemon</option>
+							{#each filteredPokemones as pokemon}
+								<option value={pokemon.id}>{pokemon.identificador}</option>
+							{/each}
+						</select>
+					</div>
+					<div>
+						<label for="nuevo-integrante-naturaleza">Naturaleza:</label>
+						<select
+							id="nuevo-integrante-naturaleza"
+							bind:value={$integranteNuevo.id_naturaleza}
+							required
+						>
+							<option value="" disabled>Selecciona una naturaleza</option>
+							{#each data.naturalezas as naturaleza}
+								<option value={naturaleza.id}>{naturaleza.nombre}</option>
+							{/each}
+						</select>
+					</div>
+					<div class="movimiento-select">
+						<label for="nuevo-integrante-movimientos">Movimientos:</label>
+						<select
+							id="nuevo-integrante-movimientos"
+							bind:value={$integranteNuevo.movimientos}
+							multiple
+							required
+							on:change={verificarCantidadMovimientos}
+						>
+							<option value="" disabled>Selecciona entre 1 y 4 movimientos:</option>
+							{#each filteredMovimientos as movimiento}
+								<option value={movimiento.id}>{movimiento.nombre}</option>
+							{/each}
+						</select>
+						{#if errorMessage}
+							<div class="error-message">
+								{errorMessage}
+							</div>
+						{/if}
+					</div>
+				</div>
+				<div class="form-submit">
+					<button type="submit">Crear</button>
+				</div>
+			</form>
+		{/if}
 		<div class="presentacion">
 			{#each data.team.integrantes as integrante}
 				<div class="integrante">
@@ -102,18 +209,20 @@
 							>{integrante.pokemon.identificador}</a
 						>
 					</p>
-					<p>
-						Movimientos:
-						{#if integrante.movimientos}
-							{#each integrante.movimientos as movimiento}
-								<a href="/movimientos/{movimiento.id}" class="movs">
-									- {movimiento.nombre}
-								</a>
-							{/each}
-						{:else}
-							-
-						{/if}
-					</p>
+					<div class="alinear">
+						<p>
+							Movimientos:
+							{#if integrante.movimientos}
+								{#each integrante.movimientos as movimiento}
+									<a href="/movimientos/{movimiento.id}" class="movs">
+										- {movimiento.nombre}
+									</a>
+								{/each}
+							{:else}
+								-
+							{/if}
+						</p>
+					</div>
 					<div class="form-edit">
 						<button type="submit" class="boton editar" on:click={() => editarIntegrante(integrante)}
 							>Editar integrante</button
@@ -168,6 +277,11 @@
 					<option value={movimiento.id}>{movimiento.nombre}</option>
 				{/each}
 			</select>
+			{#if errorMessage}
+				<div class="error-message">
+					{errorMessage}
+				</div>
+			{/if}
 		</div>
 		<div class="form-submit">
 			<button type="submit">Guardar integrante</button>
@@ -210,7 +324,7 @@
 			display: flex;
 			flex-direction: row;
 			justify-content: center;
-			gap: .5rem;
+			gap: 0.5rem;
 			border-style: none;
 			align-items: center;
 		}
@@ -236,6 +350,10 @@
 		background-color: rgb(53, 24, 214);
 		color: white;
 	}
+	.boton.nuevo:hover {
+		background-color: green;
+		color: white;
+	}
 
 	a {
 		color: black;
@@ -252,9 +370,18 @@
 	.movs {
 		display: flex;
 		flex-direction: column;
-		text-align: left;
+		text-align: center;
 	}
 
+	.error-message {
+		color: red;
+		margin-top: 7px;
+		font-weight: bold;
+		position: relative;
+		border-radius: 5px;
+		width: 300px;
+		font-size: 13px;
+	}
 	.form-update {
 		margin: 5rem auto;
 		display: flex;
